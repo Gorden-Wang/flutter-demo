@@ -5,9 +5,7 @@ class HbcGoodsTitle extends StatelessWidget {
   final List theme;
 
   HbcGoodsTitle(this.title, this.theme);
-  /**
-   * title Wrap UI
-   */
+  ///   title Wrap UI
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -19,9 +17,7 @@ class HbcGoodsTitle extends StatelessWidget {
     );
   }
 
-  /**
-   * title UI
-   */
+  /// title UI
   Widget _buildTitleContainer(BuildContext context) {
     return new Container(
       child: new Text(this.title,
@@ -35,9 +31,8 @@ class HbcGoodsTitle extends StatelessWidget {
         ))
     );
   }
-  /**
-   * theme inner UI - text & split
-   */
+
+  /// theme inner UI - text & split
   Widget _generateTheme(Map item, [String split]) {
     if (item != null) {
       return new Container(
@@ -59,9 +54,8 @@ class HbcGoodsTitle extends StatelessWidget {
       );
     }
   }
-  /**
-   *  Theme UI
-   */
+  
+  /// Theme UI
   Widget _buildKeyWordContianer(BuildContext context) {
     List keyWords = <Widget>[];
     for (int i = 0; i < this.theme.length; i++) {

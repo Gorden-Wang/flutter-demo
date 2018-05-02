@@ -17,6 +17,8 @@ class HbcGoodsDetail extends StatelessWidget{
         ),
         body: new HbcGoodsIndex(DATA),
       ),
+      // debugShowMaterialGrid:true,
+      // showPerformanceOverlay:true
     );
   }
 }

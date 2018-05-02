@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'top.dart'; // top Image wrap
 import 'title.dart'; // title wrap
+import 'guilde.dart';
 
 class HbcGoodsIndex extends StatelessWidget {
   Map data;
@@ -9,24 +10,28 @@ class HbcGoodsIndex extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final goodsName = this.data['data']['goodsName'];
-    final theme = this.data['data']['goodsThemes'];
+    final Map data = this.data['data'];
+    final goodsName = data['goodsName'];
+    final theme = data['goodsThemes'];
+    final associateGuideAmount = data['associateGuideAmount'];
     return new ListView(
       children: <Widget>[
         new HbcGoodsTopImage(
             this.data['data']['goodsPictures'][0], 375.0, 375.0, '日本 - 东京'),
-        new Container(
-          padding: new EdgeInsets.only(
+        _getSamePadding(context,new HbcGoodsTitle(goodsName, theme)),
+        _getSamePadding(context, new HbcGoodsGuide(associateGuideAmount)),
+      ],
+    );
+  }
+  Widget _getSamePadding(BuildContext context,Widget someWidget){
+    return new Container(
+       padding: new EdgeInsets.only(
             left: 20.0,
             top: 10.0,
             right: 20.0,
             bottom: 10.0
           ),
-          child: new HbcGoodsTitle(goodsName, theme),
-        ),
-
-        
-      ],
+          child: someWidget,
     );
   }
 }

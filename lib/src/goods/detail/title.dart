@@ -81,6 +81,7 @@ class HbcGoodsTitle extends StatelessWidget {
       alignment: new Alignment(-1.0, -1.0),
       child: new Text(
         '预定成功后，可挑选心意司导服务哦!',
+        textAlign: TextAlign.left,
         style : new TextStyle(
           fontSize: 14.0,
           color: new Color(0xFFffaf00)

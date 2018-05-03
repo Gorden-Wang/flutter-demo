@@ -7,5 +7,5 @@
 build/
 
 .flutter-plugins
-
+.idea/
 .vscode

@@ -20,6 +20,7 @@ class HbcGoodsIndex extends StatelessWidget {
             this.data['data']['goodsPictures'][0], 375.0, 375.0, '日本 - 东京'),
         _getSamePadding(context,new HbcGoodsTitle(goodsName, theme)),
         _getSamePadding(context, new HbcGoodsGuide(associateGuideAmount)),
+        // new HbcGoodsGuide(6),
       ],
     );
   }

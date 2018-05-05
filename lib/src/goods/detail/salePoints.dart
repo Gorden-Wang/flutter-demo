@@ -36,7 +36,7 @@ class HbcGoodsSalePoints extends StatelessWidget {
                   fontFamily: 'PingFang SC'
               ),
             ),
-          )
+          ),
         ],
       ),
     );

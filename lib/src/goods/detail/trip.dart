@@ -60,12 +60,12 @@ class HbcGoodTrip extends StatelessWidget {
 
     this.trip.forEach((item) {
       List<Widget> row = [];
-      row.addAll([row2(item), titlePadding(item)]);
-      row.addAll(getDayInner(context, item['poaList']));
+      row.addAll([_getDayTitle(item), _getTitlePadding(item)]);
+      row.addAll(_getDayInner(context, item['poaList']));
       arr.add(
           new Container(
-//            margin: new EdgeInsets.only(top: 20.0),
             child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: row
             ),
           )
@@ -76,7 +76,7 @@ class HbcGoodTrip extends StatelessWidget {
     return arr;
   }
   // 每个时间段的inner wrap
-  List<Widget> getDayInner(BuildContext context, dayList) {
+  List<Widget> _getDayInner(BuildContext context, dayList) {
     List<Widget> data = [];
     dayList.forEach((dayItem) {
       data.add(
@@ -174,7 +174,7 @@ class HbcGoodTrip extends StatelessWidget {
   // 每个时间段的 title
   Container _getDayInnerItemTitle(dayItem) {
     return new Container(
-      margin: new EdgeInsets.only(top: 5.0, bottom: 5.0,left: 0.0),
+      margin: new EdgeInsets.only(top: 5.0, bottom: 10.0,left: 0.0),
       child: new Text(
         '${dayItem['poaName']}',
         style: new TextStyle(
@@ -224,7 +224,7 @@ class HbcGoodTrip extends StatelessWidget {
     );
   }
   // 每天玩法的subtitle
-  Padding titlePadding(item) {
+  Padding _getTitlePadding(item) {
     return new Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: new Text(
@@ -240,59 +240,62 @@ class HbcGoodTrip extends StatelessWidget {
     );
   }
   // 每天的玩法title
-  Row row2(item) {
-    return new Row(
-      children: <Widget>[
-        new Padding(
-          padding: const EdgeInsets.only(right: 15.0,top : 20.0),
-          child: new Stack(
-            children: <Widget>[
-              new Image.network(
-                DAY_BG,
-                width: 40.0,
-              ),
-              new Positioned(
-                  left: 15.0,
-                  top: 2.0,
-                  child: new Text(
-                    item['dateNum'],
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(
-                        color: new Color(0xff151515),
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w300
-                    ),
-                  )
-              )
+  Widget _getDayTitle(item) {
+    return new Container(
+      margin : new EdgeInsets.only(top : 20.0),
+      child: new Row(
+        children: <Widget>[
+          new Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: new Stack(
+              children: <Widget>[
+                new Image.network(
+                  DAY_BG,
+                  width: 40.0,
+                ),
+                new Positioned(
+                    left: 15.0,
+                    top: 2.0,
+                    child: new Text(
+                      item['dateNum'],
+                      textAlign: TextAlign.center,
+                      style: new TextStyle(
+                          color: new Color(0xff151515),
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w300
+                      ),
+                    )
+                )
 
-            ],
-          ),
-        ),
-        new Expanded(
-          child: new Text(
-            item['startCityName'],
-            style: new TextStyle(
-                color: new Color(0xff000111),
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500
+              ],
             ),
           ),
-        ),
-        new Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: new Text(
-            '${item['serviceHours']}小时·${item['serviceKms']}公里',
-            style: new TextStyle(
-                color: new Color(0xff7f7f7f),
-                fontSize: 13.0
+          new Expanded(
+            child: new Text(
+              item['startCityName'],
+              style: new TextStyle(
+                  color: new Color(0xff000111),
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500
+              ),
             ),
           ),
-        ),
-        new Image.network(
-          QUESTION_ICON,
-          width: 15.0,
-        )
-      ],
+          new Padding(
+            padding: const EdgeInsets.only(right: 5.0),
+            child: new Text(
+              '${item['serviceHours']}小时·${item['serviceKms']}公里',
+              style: new TextStyle(
+                  color: new Color(0xff7f7f7f),
+                  fontSize: 13.0
+              ),
+            ),
+          ),
+          new Image.network(
+            QUESTION_ICON,
+            width: 15.0,
+          )
+        ],
+      ),
     );
   }
 

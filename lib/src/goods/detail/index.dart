@@ -6,6 +6,7 @@ import 'salePoints.dart';
 import 'routePoint.dart';
 import 'map.dart';
 import 'trip.dart';
+import 'order.dart';
 
 class HbcGoodsIndex extends StatelessWidget {
   Map data;
@@ -31,6 +32,7 @@ class HbcGoodsIndex extends StatelessWidget {
         _getSamePadding(context, new HbcGoodsRoutePoint(routePointData)),
         _getSamePadding(context, new HbcGoodMap()),
         _getSamePadding(context, new HbcGoodTrip(tripData)),
+        _getSamePadding(context, new HbcGoodOrderTips())
         // new HbcGoodsGuide(6),
       ],
     );

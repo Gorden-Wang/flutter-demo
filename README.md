@@ -10,7 +10,7 @@
 ### Widget
 所有的View都要返回Widget
 
-####Image
+#### Image
 
 可以通过本地文件，网络文件，ImageProvider来初始化。同时可以设置width，height，fit，scale，alignment，repeat等等。
 
@@ -23,7 +23,7 @@ Widget _buildImage(BuildContext context){
     );  
   }
 ```
-####Text
+#### Text
 可以设置style，textAlign，textDirection,softWrap(断行)，overflow,textScaleFactor,maxLine等。TextStyle 中的height是lineHeight，对应的是多少倍的文字大小
 
 ```dart
@@ -38,7 +38,7 @@ Widget _buildImageText(BuildContext context){
     );
   }
 ```
-####Stack
+#### Stack
 需要children的Widgets多继承自Flex~同时设置定位位置Positioned，Positioned必须搭配Stack使用 A [Positioned] widget **must be** a descendant of a [Stack].. Stack更像是定位后的盒子。
 
 ```dart 
@@ -59,7 +59,7 @@ Widget build(BuildContext context){
   }
 ```
 
-####Positioned
+#### Positioned
 
 ```dart
 
@@ -85,7 +85,7 @@ Colum 不能滚动，如果children的高度高于可是范围的话会有警告
   }
 ```
 
-####ListView
+#### ListView
 
 ```dart
 Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ Widget build(BuildContext context) {
     );
   }
 ```
-###fonts
+### fonts
 
 pubspec.yaml
 

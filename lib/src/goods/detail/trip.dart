@@ -54,7 +54,7 @@ class HbcGoodTrip extends StatelessWidget {
       ),
     );
   }
-
+  // 每天的 inner wrapper
   List<Widget> _getListItem(BuildContext context, Widget day) {
     List<Widget> arr = [];
     List<Widget> row = [];
@@ -73,13 +73,13 @@ class HbcGoodTrip extends StatelessWidget {
     });
     return arr;
   }
-
+  // 每个时间段的inner wrap
   List<Widget> getDayInner(BuildContext context, dayList) {
     List<Widget> data = [];
     dayList.forEach((dayItem) {
       data.add(
           new Container(
-            margin: new EdgeInsets.only(left : 20.0),
+//            margin: new EdgeInsets.only(left : 20.0),
             decoration: new BoxDecoration(
               border: new Border(
                 bottom: new BorderSide(
@@ -103,7 +103,7 @@ class HbcGoodTrip extends StatelessWidget {
 
     return data;
   }
-
+  // 每个时间段的 img list
   Container _getDayInnerItemImg(BuildContext context, dayItem) {
     List<Widget> data = [];
     if (dayItem['pois'] == null || dayItem['pois'].length == 0) {
@@ -153,7 +153,7 @@ class HbcGoodTrip extends StatelessWidget {
       ),
     );
   }
-
+  // 每个时间段的 subtitle
   Object _getDayInnerItemSub(dayItem) {
     if (dayItem['poaDesc'] == null || dayItem['poaDesc'] == '') {
       return new Container();
@@ -170,7 +170,7 @@ class HbcGoodTrip extends StatelessWidget {
       ),
     );
   }
-
+  // 每个时间段的 title
   Container _getDayInnerItemTitle(dayItem) {
     return new Container(
       margin: new EdgeInsets.only(top: 5.0, bottom: 5.0,left: 0.0),
@@ -184,7 +184,7 @@ class HbcGoodTrip extends StatelessWidget {
       ),
     );
   }
-
+  // 每个时间段的 spliter
   Widget _getDayInnerRow(dayItem) {
     return new Padding(
       padding: const EdgeInsets.only(left : 0.0),
@@ -222,7 +222,7 @@ class HbcGoodTrip extends StatelessWidget {
       ),
     );
   }
-
+  // 每天玩法的subtitle
   Padding titlePadding(item) {
     return new Padding(
       padding: const EdgeInsets.only(top: 10.0),
@@ -238,7 +238,7 @@ class HbcGoodTrip extends StatelessWidget {
       ),
     );
   }
-
+  // 每天的玩法title
   Row row2(item) {
     return new Row(
       children: <Widget>[

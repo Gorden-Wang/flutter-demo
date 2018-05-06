@@ -61,7 +61,14 @@ class HbcGoodsIndex extends StatelessWidget {
     String _getRout3SubTitle(){
       if(carTypeNum > 0){
         if(carTypeDesc != null || carTypeDesc != ''){
-          String _d = carTypeDesc.split('、').getRange(0,4).join('、');
+          List _darr =  carTypeDesc.split('、');
+          int _length = _darr.length;
+          String _d;
+          if(_length > 4){
+            _d = _darr.getRange(0,4).join('、');
+          }else{
+            _d = _darr.getRange(0,_length).join('、');
+          }
           return '${_d}等${carTypeNum}种车型';
         }
         return '没有可服务车型';

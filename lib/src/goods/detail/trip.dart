@@ -47,7 +47,7 @@ class HbcGoodTrip extends StatelessWidget {
           new Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: new Column(
-                children: _getListItem(context, null)
+                children: _getListItem(context)
             ),
           )
         ],
@@ -55,22 +55,24 @@ class HbcGoodTrip extends StatelessWidget {
     );
   }
   // 每天的 inner wrapper
-  List<Widget> _getListItem(BuildContext context, Widget day) {
+  List<Widget> _getListItem(BuildContext context) {
     List<Widget> arr = [];
-    List<Widget> row = [];
+
     this.trip.forEach((item) {
+      List<Widget> row = [];
       row.addAll([row2(item), titlePadding(item)]);
       row.addAll(getDayInner(context, item['poaList']));
-
       arr.add(
           new Container(
-            margin: new EdgeInsets.only(top: 20.0),
+//            margin: new EdgeInsets.only(top: 20.0),
             child: new Column(
                 children: row
             ),
           )
       );
+
     });
+
     return arr;
   }
   // 每个时间段的inner wrap
@@ -100,7 +102,6 @@ class HbcGoodTrip extends StatelessWidget {
           )
       );
     });
-
     return data;
   }
   // 每个时间段的 img list
@@ -243,7 +244,7 @@ class HbcGoodTrip extends StatelessWidget {
     return new Row(
       children: <Widget>[
         new Padding(
-          padding: const EdgeInsets.only(right: 15.0),
+          padding: const EdgeInsets.only(right: 15.0,top : 20.0),
           child: new Stack(
             children: <Widget>[
               new Image.network(

@@ -234,12 +234,12 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
         )
       ),
       child: new SizedBox.fromSize(
-        size: new Size(375.0 - 20.0, 140.0),
+        size: new Size(MediaQuery.of(context).size.width, 140.0),
         child: new PageView(
           // scrollDirection : Axis.horizontal,
           physics: new AlwaysScrollableScrollPhysics(),
           controller: new PageController(
-            viewportFraction: 0.78,
+            viewportFraction: 1.0,
             keepPage: true,
           ),
           children: _getGuideList(context),
@@ -279,7 +279,7 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
         alignment: Alignment.topLeft,
         children: <Widget>[
           new Image.network(guideCover,
-              fit: BoxFit.cover, width: 245.0, height: 150.0),
+              fit: BoxFit.cover,width: 414.0,),
           new Positioned(
               bottom: 10.0,
               left: 10.0,

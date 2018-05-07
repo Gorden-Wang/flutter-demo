@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'src/goods/detail/index.dart';
 import 'src/goods/detail/footer.dart';
+
 void main() => runApp(new Center(child: new HbcGoodsDetail()));
 const Map DATA = {
   "data": {
@@ -566,11 +567,12 @@ class HbcGoodsDetail extends StatelessWidget {
           primaryColor: Colors.white
       ),
       home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('别样樱花 | 井之头恩赐公园+三鹰吉卜力美术馆+台场自由女神像+森美术馆 中文1日包车游，东京往返'),
-        ),
-        body: new HbcGoodsIndex(DATA),
-          bottomNavigationBar : new HbcGoodFooter()
+          appBar: new AppBar(
+            title: new Text(
+                '别样樱花 | 井之头恩赐公园+三鹰吉卜力美术馆+台场自由女神像+森美术馆 中文1日包车游，东京往返'),
+          ),
+          body: new HbcGoodsIndex(DATA),
+          bottomNavigationBar: new HbcGoodFooter()
       ),
       // debugShowMaterialGrid:true,
       // showPerformanceOverlay:true

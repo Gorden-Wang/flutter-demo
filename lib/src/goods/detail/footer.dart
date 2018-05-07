@@ -1,10 +1,14 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 const String IM_IMG = 'https://fr-static.huangbaoche.com/20180305/icon-note.9d3c78e1ccb4dd1b.png';
 const String PHONE_IMG = 'https://fr-static.huangbaoche.com/20180305/icon-phone.9c532d6a8f4c450a.png';
 
 
 class HbcGoodFooter extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -32,15 +36,27 @@ class HbcGoodFooter extends StatelessWidget {
                     )
                 )
             ),
-            child: new Image.network(
-              IM_IMG,
-            ),
+            child: new GestureDetector(
+              onTap: (){
+//                print('12312');
+                _launchURL('sms:18510249866');
+//                print('44');
+              },
+              child: new Image.network(
+                IM_IMG,
+              ),
+            )
           ),
-          new Container(
-            width: 90.0,
-            height: 30.0,
-            child: new Image.network(
-              PHONE_IMG,
+          new GestureDetector(
+            onTap: (){
+              _launchURL('tel:110');
+            },
+            child: new Container(
+              width: 90.0,
+              height: 30.0,
+              child: new Image.network(
+                PHONE_IMG,
+              ),
             ),
           ),
           new Expanded(
@@ -80,4 +96,15 @@ class HbcGoodFooter extends StatelessWidget {
       ),
     );
   }
+
+  Future<Null> _launchURL(url) async {
+//    const url = 'sms:18510249866';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+
 }

@@ -13,7 +13,7 @@ class HbcGoodFooter extends StatelessWidget {
           color : Colors.white,
         boxShadow: <BoxShadow>[
           new BoxShadow(
-            color : new Color.fromARGB(125, 0, 0, 0),
+            color : new Color.fromARGB(20, 0, 0, 0),
             offset: Offset(0.0, -3.0),
               blurRadius : 3.0,
           )
@@ -34,9 +34,6 @@ class HbcGoodFooter extends StatelessWidget {
             ),
             child: new Image.network(
               IM_IMG,
-//              width: 20.0,
-//              height: 15.0,
-//              fit: BoxFit.values,
             ),
           ),
           new Container(

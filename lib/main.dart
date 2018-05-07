@@ -34,7 +34,7 @@ const Map DATA = {
     "goodsName": "亲子趣时光｜东京亲子中文4日包车游，东京往返（建议6～12岁）",
     "goodsNo": "LT1180880039",
     "goodsPictures": [
-      "https://hbcdn.huangbaoche.com/fr-hd/DQ94mg2Plg0!m",
+      "https://fr-hd.huangbaoche.com/DQ94mg2Plg0?&x-oss-process=image/resize,limit_0,w_480",
       "https://hbcdn.huangbaoche.com/fr-hd/EzwqThidbg0!m",
       "https://hbcdn.huangbaoche.com/fr-hd/E5qR0sZ-Sg0!m",
       "https://hbcdn.huangbaoche.com/fr-hd/DY8MZjP1tQ0!m",

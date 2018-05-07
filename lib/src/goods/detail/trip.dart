@@ -120,7 +120,9 @@ class HbcGoodTrip extends StatelessWidget {
       data.add(
         new GestureDetector(
             onTap: () {
-              _launchURL(context, 'https://goods.huangbaoche.com/goods/poi/${item['poiId']}',item['poiName']);
+              _launchURL(context,
+                  'https://goods.huangbaoche.com/goods/poi/${item['poiId']}',
+                  item['poiName']);
             },
             child: new Container(
               margin: new EdgeInsets.only(bottom: 10.0),
@@ -395,7 +397,8 @@ class HbcGoodTrip extends StatelessWidget {
     );
   }
 
-  Future<Null> _launchURL(BuildContext context, String url,String title) async {
+  Future<Null> _launchURL(BuildContext context, String url,
+      String title) async {
 //    const url = 'sms:18510249866';
 //    flutterWebviewPlugin.launch(url);
     Navigator.push(context, new MaterialPageRoute<void>(

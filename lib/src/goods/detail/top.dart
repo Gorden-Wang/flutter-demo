@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 class HbcGoodsTopImage extends StatelessWidget{
-  // url : ImageUrl 
+  // url : ImageUrl
   // width,height : discrib the size of the Images
 
   final String url,imgTitle;
@@ -24,11 +24,22 @@ class HbcGoodsTopImage extends StatelessWidget{
   }
 
   Widget _buildImage(BuildContext context){
-    return new Image.network(
-      this.url,
-      width: this.width,
-      height: this.height
-    );  
+     final double width = MediaQuery.of(context).size.width;
+    return new SizedBox.fromSize(
+      size: new Size(width,width),
+      child: new Image.network(
+        this.url,
+      width: width,
+      height: width,
+        fit: BoxFit.cover,
+      ),
+    );
+//    return new Image.network(
+//      this.url,
+////      width: this.width,
+////      height: this.height,
+//      fit: BoxFit.cover,
+//    );
   }
 
   Widget _buildImageTextContainer(BuildContext context){

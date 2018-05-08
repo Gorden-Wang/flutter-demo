@@ -247,18 +247,6 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
         ),
       ),
     );
-    // return new SizedBox.fromSize(
-    //   size: new Size(245.0, 140.0),
-    //   child: new PageView(
-    //     // scrollDirection : Axis.horizontal,
-    //     physics: new AlwaysScrollableScrollPhysics(),
-    //     controller : new PageController(
-    //       viewportFraction : 0.77,
-    //       keepPage : true,
-    //     ),
-    //     children: _getGuideList(context),
-    //   ),
-    // );
   }
 
   List<Widget> _getGuideList(BuildContext context) {
@@ -279,12 +267,9 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
       child: new Stack(
         alignment: Alignment.topLeft,
         children: <Widget>[
-//          new Image.network(guideCover,
-//              fit: BoxFit.cover,width: 414.0,),
         new CachedNetworkImage(
             imageUrl: guideCover,
             width: MediaQuery.of(context).size.width,
-//            height: width,
             fit: BoxFit.cover,
           ),
           new Positioned(

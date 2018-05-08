@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/src/util/HBCTheme.dart';
 
 const Map GUIDE = {
   "data": {
@@ -188,7 +189,6 @@ class HbcGoodsGuide extends StatelessWidget {
     final guildList = GUIDE_DATA['listData'];
     return new Container(
         child: new Column(
-          // mainAxisSize:  MainAxisSize.max,
           children: <Widget>[
             _getGuideTips(context),
             new _HbcGuideSwiper(guildList)
@@ -199,13 +199,12 @@ class HbcGoodsGuide extends StatelessWidget {
   Widget _getGuideTips(BuildContext context) {
     return new Container(
         alignment: new Alignment(-1.0, -1.0),
-        child: new Text(
-          '可由${this.associateGuideAmount}位当地人带你体验',
-          style: new TextStyle(
-              color: new Color(0xff151515),
-              fontSize: 16.0,
-              fontWeight: FontWeight.w400),
-        ));
+        child: HBCTheme.buildText(
+          text: '可由${this.associateGuideAmount}位当地人带你体验',
+          fontSize: 16.0,
+          fontWeight: FontWeight.w400,
+        )
+    );
   }
 }
 
@@ -297,22 +296,18 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text(
-                        guideName,
-                        textAlign: TextAlign.left,
-                        style: new TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
+                      HBCTheme.buildText(
+                        text: guideName,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white
                       ),
-                      new Text(
-                        '下单支付后可聊天',
-                        textAlign: TextAlign.left,
-                        style: new TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
-                      )
+                      HBCTheme.buildText(
+                          text: '下单支付后可聊天',
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white
+                      ),
                     ],
                   ))),
         ],

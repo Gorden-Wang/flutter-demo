@@ -17,6 +17,8 @@ class HbcGoodsIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     final Map data = this.data;
     final goodsName = data['goodsName'];
+    final depCountryName = data['depCountryName'];
+    final depCityName = data['depCityName'];
     final theme = data['goodsThemes'];
     final associateGuideAmount = data['associateGuideAmount'];
     final String salePoints = data['salePoints'];
@@ -25,7 +27,7 @@ class HbcGoodsIndex extends StatelessWidget {
     return new ListView(
       children: <Widget>[
         new HbcGoodsTopImage(
-            this.data['goodsPictures'][0], 375.0, 375.0, '日本 - 东京'),
+            this.data['goodsPictures'][0], 375.0, 375.0, '${depCountryName} - ${depCityName}'),
         _getSamePadding(context,new HbcGoodsTitle(goodsName, theme)),
         _getSamePadding(context, new HbcGoodsGuide(associateGuideAmount)),
         _getSamePadding(context, new HbcGoodsSalePoints(salePoints)),
@@ -49,7 +51,7 @@ class HbcGoodsIndex extends StatelessWidget {
           child: someWidget,
     );
   }
-  List _getRoutePointData(){
+  List<Map> _getRoutePointData(){
     final Map data = this.data;
     final dayCount = data['daysCount'];
     final totalDistance = data['totalDistance'];

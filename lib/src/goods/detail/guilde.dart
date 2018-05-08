@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 const Map GUIDE = {
@@ -278,8 +279,14 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
       child: new Stack(
         alignment: Alignment.topLeft,
         children: <Widget>[
-          new Image.network(guideCover,
-              fit: BoxFit.cover,width: 414.0,),
+//          new Image.network(guideCover,
+//              fit: BoxFit.cover,width: 414.0,),
+        new CachedNetworkImage(
+            imageUrl: guideCover,
+            width: MediaQuery.of(context).size.width,
+//            height: width,
+            fit: BoxFit.cover,
+          ),
           new Positioned(
               bottom: 10.0,
               left: 10.0,

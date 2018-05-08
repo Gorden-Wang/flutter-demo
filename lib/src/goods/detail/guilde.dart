@@ -23,7 +23,7 @@ const Map GUIDE = {
         "guideNo": "A18004",
         "guideStatus": 4,
         "homeDesc":
-            "10年日企工作经验，20万公里霓虹旅行经验，精通中日英语，稳重热情颜值高-_-||熟悉日本文化社会历史，为您讲解美食背景，给您安排张驰有度的行程。真诚友善的阿德，是您深度私密的日本trip的可信任挚友",
+        "10年日企工作经验，20万公里霓虹旅行经验，精通中日英语，稳重热情颜值高-_-||熟悉日本文化社会历史，为您讲解美食背景，给您安排张驰有度的行程。真诚友善的阿德，是您深度私密的日本trip的可信任挚友",
         "imTargetId": "g200100008748",
         "isQuality": 0,
         "langString": "英语 上海话 中文",
@@ -51,7 +51,7 @@ const Map GUIDE = {
         "guideNo": "A21023",
         "guideStatus": 0,
         "homeDesc":
-            "来日本16年对日本的风土人情非常了解、可能是在日本太久的原因、见到中国客人有一种由衷的亲切感，喜欢日本更喜欢我的母国中国、我会用对待家人一样的热情来为您提供专业的服务，让您感觉不到身处异国他乡的无助感、日本欢迎您。",
+        "来日本16年对日本的风土人情非常了解、可能是在日本太久的原因、见到中国客人有一种由衷的亲切感，喜欢日本更喜欢我的母国中国、我会用对待家人一样的热情来为您提供专业的服务，让您感觉不到身处异国他乡的无助感、日本欢迎您。",
         "imTargetId": "g214114782137",
         "isQuality": 0,
         "langString": "中文",
@@ -106,7 +106,7 @@ const Map GUIDE = {
         "guideNo": "A80450",
         "guideStatus": 0,
         "homeDesc":
-            "80后的东北人，高中毕业后来东京跟家里人团聚，语言学校，大学，现在已经就职，来日本以后发现和曾经自己想象的有很大的差别，这里的人很谦逊、不愿意给别人带来麻烦，这里的人很拘谨，不愿意轻易向别人敞开心扉，这里的人很敬业，即使枯燥乏味的工作岗位也会一丝不苟的去完成，这里的人又很奔放，尤其是喝过酒以后，种种看似完全各异的性格组成了日本这一个国家，这个国家与我们有千丝万缕的联系和隔阂，所以更值得您亲身来体验",
+        "80后的东北人，高中毕业后来东京跟家里人团聚，语言学校，大学，现在已经就职，来日本以后发现和曾经自己想象的有很大的差别，这里的人很谦逊、不愿意给别人带来麻烦，这里的人很拘谨，不愿意轻易向别人敞开心扉，这里的人很敬业，即使枯燥乏味的工作岗位也会一丝不苟的去完成，这里的人又很奔放，尤其是喝过酒以后，种种看似完全各异的性格组成了日本这一个国家，这个国家与我们有千丝万缕的联系和隔阂，所以更值得您亲身来体验",
         "imTargetId": "g200100000354",
         "isQuality": 0,
         "langString": "日语 中文",
@@ -134,7 +134,7 @@ const Map GUIDE = {
         "guideNo": "A35608",
         "guideStatus": 0,
         "homeDesc":
-            "喜欢旅游、喜欢美食、热爱生活的小伙子^_^ 让初来乍到的您体验不一样的本土风情 像老朋友一样一起用“心”旅行Y(^_^)Y",
+        "喜欢旅游、喜欢美食、热爱生活的小伙子^_^ 让初来乍到的您体验不一样的本土风情 像老朋友一样一起用“心”旅行Y(^_^)Y",
         "imTargetId": "g200100008344",
         "isQuality": 0,
         "langString": "英语 日语 中文",
@@ -188,12 +188,12 @@ class HbcGoodsGuide extends StatelessWidget {
     final guildList = GUIDE_DATA['listData'];
     return new Container(
         child: new Column(
-      // mainAxisSize:  MainAxisSize.max,
-      children: <Widget>[
-        _getGuideTips(context),
-        new _HbcGuideSwiper(guildList)
-      ],
-    ));
+          // mainAxisSize:  MainAxisSize.max,
+          children: <Widget>[
+            _getGuideTips(context),
+            new _HbcGuideSwiper(guildList)
+          ],
+        ));
   }
 
   Widget _getGuideTips(BuildContext context) {
@@ -211,7 +211,9 @@ class HbcGoodsGuide extends StatelessWidget {
 
 class _HbcGuideSwiper extends StatefulWidget {
   final List guildList;
+
   _HbcGuideSwiper(this.guildList);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -229,13 +231,18 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
       alignment: Alignment.topLeft,
       margin: new EdgeInsetsDirectional.only(top: 15.0),
       padding: new EdgeInsetsDirectional.only(bottom: 25.0),
-      decoration : new BoxDecoration(
-        border: new Border(
-          bottom: new BorderSide(color: new Color(0xffdbdbdb),width: 1.0,style: BorderStyle.solid)
-        )
+      decoration: new BoxDecoration(
+          border: new Border(
+              bottom: new BorderSide(color: new Color(0xffdbdbdb),
+                  width: 1.0,
+                  style: BorderStyle.solid)
+          )
       ),
       child: new SizedBox.fromSize(
-        size: new Size(MediaQuery.of(context).size.width, 140.0),
+        size: new Size(MediaQuery
+            .of(context)
+            .size
+            .width, 140.0),
         child: new PageView(
           // scrollDirection : Axis.horizontal,
           physics: new AlwaysScrollableScrollPhysics(),
@@ -267,9 +274,20 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
       child: new Stack(
         alignment: Alignment.topLeft,
         children: <Widget>[
-        new CachedNetworkImage(
+          new CachedNetworkImage(
+            placeholder: new DecoratedBox(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                    image: new AssetImage('assets/imgs/hold.png'),
+                    fit: BoxFit.cover
+                ),
+              ),
+            ),
             imageUrl: guideCover,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             fit: BoxFit.cover,
           ),
           new Positioned(
@@ -277,26 +295,26 @@ class _HbcGuildSwiperState extends State<_HbcGuideSwiper> {
               left: 10.0,
               child: new Container(
                   child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new Text(
-                    guideName,
-                    textAlign: TextAlign.left,
-                    style: new TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  ),
-                  new Text(
-                    '下单支付后可聊天',
-                    textAlign: TextAlign.left,
-                    style: new TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  )
-                ],
-              ))),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new Text(
+                        guideName,
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
+                      ),
+                      new Text(
+                        '下单支付后可聊天',
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
+                      )
+                    ],
+                  ))),
         ],
       ),
     );

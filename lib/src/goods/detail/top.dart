@@ -31,20 +31,19 @@ class HbcGoodsTopImage extends StatelessWidget {
         .of(context)
         .size
         .width;
-//    return new SizedBox.fromSize(
-//      size: new Size(width,width),
-//      child: new Image.network(
-//        this.url,
-//      width: width,
-//      height: width,
-//        fit: BoxFit.cover,
-//      ),
-//    );
 
 
     return new SizedBox.fromSize(
       size: new Size(width, width),
       child: new CachedNetworkImage(
+        placeholder: new DecoratedBox(
+          decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: new AssetImage('assets/imgs/hold.png'),
+              fit: BoxFit.cover
+            ),
+          ),
+        ),
         imageUrl: this.url,
         width: width,
         height: width,

@@ -130,6 +130,14 @@ class HbcGoodTrip extends StatelessWidget {
               child: new Stack(
                 children: <Widget>[
                   new CachedNetworkImage(
+                    placeholder: new DecoratedBox(
+                      decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                            image: new AssetImage('assets/imgs/hold.png'),
+                            fit: BoxFit.cover
+                        ),
+                      ),
+                    ),
                     imageUrl: item['poiPic'],
                     width: MediaQuery
                         .of(context)
@@ -158,37 +166,6 @@ class HbcGoodTrip extends StatelessWidget {
             )
         ),
 
-//          new Container(
-//            margin: new EdgeInsets.only(bottom: 10.0),
-//            child: new Stack(
-//              children: <Widget>[
-//                new Image.network(
-//                  item['poiPic'],
-//                  height: 190.0,
-//                  width: MediaQuery
-//                      .of(context)
-//                      .size
-//                      .width,
-//                  fit: BoxFit.cover,
-//                ),
-//                new Positioned(
-//                  bottom: 15.0,
-//                  right: 20.0,
-//                  child: new Container(
-//                    child: new Text(
-//                      '${item['poiName']}',
-//                      style: new TextStyle(
-//                          color: Colors.white,
-//                          fontSize: 14.0,
-//                          fontWeight: FontWeight.w600
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//
-//              ],
-//            ),
-//          )
       );
     });
 

@@ -16,7 +16,6 @@ class HbcGoodsDetail extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return new MaterialApp(
-      title: '别样樱花 | 井之头恩赐公园+三鹰吉卜力美术馆+台场自由女神像+森美术馆 中文1日包车游，东京往返',
       theme: new ThemeData(
           primaryColor: Colors.white
       ),

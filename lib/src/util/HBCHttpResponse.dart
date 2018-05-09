@@ -36,10 +36,7 @@ class HBCHttpResponse {
     });
   }
 
-//  int get httpStatus => this.httpStatus;
-//  String get resStatus => this.resData;
-//  dynamic get resData => this.resData;
-//  String get resMessage => this.resMessage;
+
 
 
 

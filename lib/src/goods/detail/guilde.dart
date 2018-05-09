@@ -177,7 +177,7 @@ const Map GUIDE = {
   },
   "status": 200
 };
-Map GUIDE_DATA = GUIDE['data'];
+Map GUIDE_DATA =  GUIDE['data'];
 
 class HbcGoodsGuide extends StatelessWidget {
   final int associateGuideAmount;

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../util/HBCTheme.dart';
 
 class HbcGoodsTopImage extends StatelessWidget {
-  // url : ImageUrl
-  // width,height : discrib the size of the Images
 
   final String url, imgTitle;
   final double width, height;
 
-  HbcGoodsTopImage(this.url, this.width, this.height, this.imgTitle);
+  HbcGoodsTopImage({
+    @required this.url,
+    this.width,
+    this.height,
+    @required this.imgTitle
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,6 @@ class HbcGoodsTopImage extends StatelessWidget {
           left: 0.0,
           child: _buildImageTextContainer(context),
         )
-        // _buildImageTextContainer(context)
       ],
     );
   }
@@ -32,15 +35,14 @@ class HbcGoodsTopImage extends StatelessWidget {
         .size
         .width;
 
-
     return new SizedBox.fromSize(
       size: new Size(width, width),
       child: new CachedNetworkImage(
         placeholder: new DecoratedBox(
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: new AssetImage('assets/imgs/hold.png'),
-              fit: BoxFit.cover
+                image: new AssetImage('assets/imgs/hold.png'),
+                fit: BoxFit.cover
             ),
           ),
         ),
@@ -50,29 +52,9 @@ class HbcGoodsTopImage extends StatelessWidget {
         fit: BoxFit.cover,
       ),
     );
-//    return new SizedBox.fromSize(
-//      size: new Size(width,width),
-//      child: new FadeInImage(
-//        placeholder: kTransparentImage,
-//        image: new CachedNetworkImage(
-//          imageUrl:
-//          this.url
-//        ),
-//        width: width,
-//        height: width,
-//      )
-//    );
-
-
-//    return new Image.network(
-//      this.url,
-////      width: this.width,
-////      height: this.height,
-//      fit: BoxFit.cover,
-//    );
   }
 
-  Widget _buildImageTextContainer(BuildContext context) {
+  Container _buildImageTextContainer(BuildContext context) {
     return new Container(
       decoration: new BoxDecoration(
           color: Colors.black54,
@@ -93,14 +75,12 @@ class HbcGoodsTopImage extends StatelessWidget {
     );
   }
 
-  Widget _buildImageText(BuildContext context) {
-    return new Text(
-        this.imgTitle,
-        style: new TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-            fontWeight: FontWeight.w700
-        )
+  Text _buildImageText(BuildContext context) {
+    return HBCTheme.buildText(
+      text: this.imgTitle,
+      fontSize: 16.0,
+      color: Colors.white,
+      fontWeight: FontWeight.w700
     );
   }
 }

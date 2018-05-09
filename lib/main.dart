@@ -45,7 +45,9 @@ class HbcGoodsDetail extends StatelessWidget {
                 data['goodsName']),
           ),
           bottomNavigationBar: new HbcGoodFooter(),
-          body:  new HbcGoodsIndex(data)
+          body:  new HbcGoodsIndex(
+            data : data
+          )
       );
   }
 }

@@ -8,14 +8,18 @@ class HbcGoodsTopImage extends StatelessWidget {
   final double width, height;
 
   HbcGoodsTopImage({
+    Key key,
     @required this.url,
     this.width,
     this.height,
     @required this.imgTitle
-  });
+  }) : super(key:key){
+    print('top init');
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('top widgets');
     return new Stack(
       alignment: const Alignment(-1.0, 0.8),
       children: <Widget>[

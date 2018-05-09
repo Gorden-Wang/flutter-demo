@@ -11,7 +11,10 @@ import 'order.dart';
 class HbcGoodsIndex extends StatelessWidget {
   final Map data;
 
-  HbcGoodsIndex(this.data);
+  HbcGoodsIndex({
+    Key key,
+    this.data
+  }) : super(key: key);
 
   set data(data) {
     this.data = new Map.from(data);
@@ -44,7 +47,7 @@ class HbcGoodsIndex extends StatelessWidget {
         _getSamePadding(context, new HbcGoodsSalePoints(getData('salePoints'))),
         _getSamePadding(context, new HbcGoodsRoutePoint(routePointData)),
         _getSamePadding(context, new HbcGoodMap()),
-        _getSamePadding(context, new HbcGoodTrip(getData('routes'))),
+        _getSamePadding(context, new HbcGoodTrip(trip: getData('routes'))),
         _getSamePadding(context, new HbcGoodOrderTips())
       ],
     );

@@ -7,6 +7,7 @@ import 'routePoint.dart';
 import 'map.dart';
 import 'trip.dart';
 import 'order.dart';
+import 'tripList.dart';
 
 class HbcGoodsIndex extends StatelessWidget {
   final Map data;
@@ -29,27 +30,61 @@ class HbcGoodsIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new ListView(
-      children: <Widget>[
-        new HbcGoodsTopImage(
-            url: getData('goodsPictures')[0],
-            imgTitle: '${getData('depCountryName')} - ${getData(
-                'depCityName')}',
-            width: MediaQuery
-                .of(context)
-                .size
-                .width
-        ),
-        _getSamePadding(context,
-            new HbcGoodsTitle(getData('goodsName'), getData('goodsThemes'))),
-        _getSamePadding(
-            context, new HbcGoodsGuide(getData('associateGuideAmount'))),
-        _getSamePadding(context, new HbcGoodsSalePoints(getData('salePoints'))),
-        _getSamePadding(context, new HbcGoodsRoutePoint(routePointData)),
-        _getSamePadding(context, new HbcGoodMap()),
-        _getSamePadding(context, new HbcGoodTrip(trip: getData('routes'))),
-        _getSamePadding(context, new HbcGoodOrderTips())
-      ],
+    return new ListView.builder(
+//      children: <Widget>[
+//        new HbcGoodsTopImage(
+//            url: getData('goodsPictures')[0],
+//            imgTitle: '${getData('depCountryName')} - ${getData(
+//                'depCityName')}',
+//            width: MediaQuery
+//                .of(context)
+//                .size
+//                .width
+//        ),
+//        _getSamePadding(context,
+//            new HbcGoodsTitle(getData('goodsName'), getData('goodsThemes'))),
+//        _getSamePadding(
+//            context, new HbcGoodsGuide(getData('associateGuideAmount'))),
+//        _getSamePadding(context, new HbcGoodsSalePoints(getData('salePoints'))),
+//        _getSamePadding(context, new HbcGoodsRoutePoint(routePointData)),
+//        _getSamePadding(context, new HbcGoodMap()),
+//        _getSamePadding(context, new HbcGoodTrip(trip: getData('routes'))),
+//        _getSamePadding(context, new HbcGoodOrderTips()),
+//      ],
+      itemBuilder: (BuildContext context, index) {
+        print(index);
+        switch (index) {
+          case 0 :
+            return new HbcGoodsTopImage(
+                url: getData('goodsPictures')[0],
+                imgTitle: '${getData('depCountryName')} - ${getData(
+                    'depCityName')}',
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width
+            );
+          case 1 :
+            return _getSamePadding(context, new HbcGoodsTitle(
+                getData('goodsName'), getData('goodsThemes')));
+          case 2 :
+            return _getSamePadding(
+                context, new HbcGoodsGuide(getData('associateGuideAmount')));
+          case 3 :
+            return _getSamePadding(context, new HbcGoodsSalePoints(getData('salePoints')));
+          case 4 :
+            return _getSamePadding(context, new HbcGoodsRoutePoint(routePointData));
+          case 5 :
+            return _getSamePadding(context, new HbcGoodMap());
+          case 6 :
+            return _getSamePadding(context, new HbcGoodTrip(trip: getData('routes')));
+          case 7 :
+            return _getSamePadding(context, new HBCGOODTripList(trip: getData('routes')));
+          case 8 :
+            return _getSamePadding(context, new HbcGoodOrderTips());
+
+        }
+      }
     );
   }
 

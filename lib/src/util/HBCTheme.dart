@@ -17,11 +17,15 @@ class HBCTheme {
     TextOverflow overflow,
     double textScaleFactor,
     int maxLines,
+    TextDecoration decoration,
+    Color decorationColor,
+    TextDecorationStyle decorationStyle,
   }) {
     color ??= Colors.grey.shade800;
     fontWeight ??= FontWeight.normal;
     fontFamily ??= 'PingFang SC';
     height ??= 1.0;
+    decoration ??= TextDecoration.none;
     return new Text(
       text,
       textAlign: textAlign,
@@ -35,7 +39,8 @@ class HBCTheme {
           fontSize: fontSize,
           fontWeight: fontWeight,
           fontFamily: fontFamily,
-          height: height
+          height: height,
+          decoration: decoration
       ),
     );
   }

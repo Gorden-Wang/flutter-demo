@@ -13,7 +13,7 @@ class HbcGoodsTopImage extends StatelessWidget {
     this.width,
     this.height,
     @required this.imgTitle
-  }) : super(key:key){
+  }) : super(key: key) {
     print('top init');
   }
 
@@ -39,8 +39,8 @@ class HbcGoodsTopImage extends StatelessWidget {
         .size
         .width;
 
-    return new SizedBox.fromSize(
-      size: new Size(width, width),
+    return new AspectRatio(
+      aspectRatio: 1.0,
       child: new CachedNetworkImage(
         placeholder: new DecoratedBox(
           decoration: new BoxDecoration(
@@ -81,10 +81,10 @@ class HbcGoodsTopImage extends StatelessWidget {
 
   Text _buildImageText(BuildContext context) {
     return HBCTheme.buildText(
-      text: this.imgTitle,
-      fontSize: 16.0,
-      color: Colors.white,
-      fontWeight: FontWeight.w700
+        text: this.imgTitle,
+        fontSize: 16.0,
+        color: Colors.white,
+        fontWeight: FontWeight.w700
     );
   }
 }

@@ -5,7 +5,7 @@ import 'src/goods/detail/footer.dart';
 import 'src/util/HBCHttp.dart';
 import 'src/util/HBCHttpResponse.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-
+import 'src/goods/list/index.dart';
 
 void main() => runApp(new Center(child: new HbcGoodsDetail()));
 
@@ -17,22 +17,43 @@ class HbcGoodsDetail extends StatelessWidget {
       theme: new ThemeData(
           primaryColor: Colors.white
       ),
+//      home: new Container(
+//        color: Colors.white,
+//        child: new Center(
+//          child: new FutureBuilder<HBCHttpResponse>(
+//            future: new HBCHttp(
+//                url: 'https://api7.huangbaoche.com/goods/v1.5/p/home/goodsDetail?goodsNo=IC1162040004&channelId=1145431513&offset=0&limit=2&userId=114638169144&fromGuideHome=&guideId=&ignoreGoodsStatus=',
+//                ak: 'aaa').get(),
+//            builder: (context, snapshot) {
+//              if (snapshot.hasData) {
+//                return _buildHome(snapshot.data.resData);
+//              } else if (snapshot.hasError) {
+//                return new Text("${snapshot.error}");
+//              }
+//              return new CircularProgressIndicator();
+//            },
+//          ),
+//        ),
+//      ),
+
       home: new Container(
         color: Colors.white,
-        child: new Center(
-          child: new FutureBuilder<HBCHttpResponse>(
-            future: new HBCHttp(
-                url: 'https://api7.huangbaoche.com/goods/v1.5/p/home/goodsDetail?goodsNo=IC1162040004&channelId=1145431513&offset=0&limit=2&userId=114638169144&fromGuideHome=&guideId=&ignoreGoodsStatus=',
-                ak: 'aaa').get(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return _buildHome(snapshot.data.resData);
-              } else if (snapshot.hasError) {
-                return new Text("${snapshot.error}");
-              }
-              return new CircularProgressIndicator();
-            },
-          ),
+        child: new Container(
+            child: new Center(
+              child: new FutureBuilder<HBCHttpResponse>(
+                future: new HBCHttp(
+                    url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=0&limit=30',
+                    ak: 'aaa').get(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return new HBCGoodList(snapshot.data.resData);
+                  } else if (snapshot.hasError) {
+                    return new Text("${snapshot.error}");
+                  }
+                  return new CircularProgressIndicator();
+                },
+              ),
+            )
         ),
       ),
       routes:
@@ -46,30 +67,55 @@ class HbcGoodsDetail extends StatelessWidget {
 
   Route<dynamic> _getRoute(RouteSettings settings) {
     final List<String> path = settings.name.split('/poi/');
+    final List<String> goodsPath = settings.name.split('/goods/');
 
-    if (path[0] != '')
-      return null;
-    if (path[1] == null) {
+    if (goodsPath.length == 2 && goodsPath[1] != null) {
       return new MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => null
+          builder: (BuildContext context) {
+            return new Container(
+              color: Colors.white,
+              child: new Center(
+                child: new FutureBuilder<HBCHttpResponse>(
+                  future: new HBCHttp(
+                      url: 'https://api7.huangbaoche.com/goods/v1.5/p/home/goodsDetail?goodsNo=${goodsPath[1]}&channelId=1145431513&offset=0&limit=2&userId=114638169144&fromGuideHome=&guideId=&ignoreGoodsStatus=',
+                      ak: 'aaa').get(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return _buildHome(snapshot.data.resData);
+                    } else if (snapshot.hasError) {
+                      return new Text("${snapshot.error}");
+                    }
+                    return new CircularProgressIndicator();
+                  },
+                ),
+              ),
+            );
+          }
+      );
+    }
+    if (path.length == 2 && path[1] != null) {
+      return new MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) {
+            return new WebviewScaffold(
+              url: 'https://goods.huangbaoche.com/goods/poi/${path[1]}',
+              appBar: new AppBar(
+                title: new Text('阿斯蒂芬'),
+              ),
+              withZoom: true,
+              withLocalStorage: true,
+            );
+          }
       );
     }
 
     return new MaterialPageRoute(
         settings: settings,
         builder: (BuildContext context) {
-          return new WebviewScaffold(
-            url: 'https://goods.huangbaoche.com/goods/poi/${path[1]}',
-            appBar: new AppBar(
-              title: new Text('阿斯蒂芬'),
-            ),
-            withZoom: true,
-            withLocalStorage: true,
-          );
+          return null;
         }
     );
-
   }
 
   Scaffold _buildHome(Map data) {

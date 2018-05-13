@@ -2,17 +2,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 const String DAY_BG = 'https://fr-static.huangbaoche.com/20180320/icon-day.6bd0b42e4c3243a9.png';
 const String QUESTION_ICON = 'https://fr-static.huangbaoche.com/20180320/wen.8e3e27ff1f412a62.png';
 
-class HBCGOODTripList extends StatelessWidget{
+class HBCGOODTripList extends StatelessWidget {
   final List trip;
+
   HBCGOODTripList({
     Key key,
     this.trip
-  }) : super(key: key){
+  }) : super(key: key) {
     print('init trip');
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -97,23 +100,25 @@ class HBCGOODTripList extends StatelessWidget{
               margin: new EdgeInsets.only(bottom: 10.0),
               child: new Stack(
                 children: <Widget>[
-                  new CachedNetworkImage(
-                    placeholder: new DecoratedBox(
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                            image: new AssetImage('assets/imgs/hold.png'),
-                            fit: BoxFit.cover
+                  new AspectRatio(
+                      aspectRatio: 2.0,
+                      child: new CachedNetworkImage(
+                        placeholder: new DecoratedBox(
+                          decoration: new BoxDecoration(
+                            image: new DecorationImage(
+                                image: new AssetImage('assets/imgs/hold.png'),
+                                fit: BoxFit.cover
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    imageUrl: item['poiPic'],
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    height: 190.0,
-                    fit: BoxFit.cover,
-                  ),
+                        imageUrl: item['poiPic'],
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: 190.0,
+                        fit: BoxFit.cover,
+                      )),
                   new Positioned(
                     bottom: 15.0,
                     right: 20.0,

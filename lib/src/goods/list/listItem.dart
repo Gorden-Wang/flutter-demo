@@ -12,7 +12,6 @@ class HbcCityListItem extends StatelessWidget{
     // TODO: implement build
     return new GestureDetector(
       onTap: (){
-        print('i clicked ${item['goodsNo']}');
         Navigator.of(context).pushNamed('/goods/${item['goodsNo']}');
       },
       child:  new Container(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'top.dart';
-import 'listItem.dart';
-import 'tab.dart';
-import 'filter.dart';
+import 'package:myapp/src/components/city/topContianer.dart';
+import 'package:myapp/src/components/city/listItemContainer.dart';
+import 'package:myapp/src/components/city/tabContianer.dart';
+import 'package:myapp/src/components/city/filterContianer.dart';
+
 
 class HBCGoodList extends StatefulWidget {
   final Map data;
@@ -34,13 +35,13 @@ class ListState extends State<HBCGoodList>{
 
   @override
   Widget build(BuildContext context) {
-    var topFilter = _scroll > 350 ? new Positioned(
-    left: 0.0,
-    width: MediaQuery
-        .of(context)
-        .size
-        .width,
-    child: new HbcCityFilter(),
+    var topFilter = _scroll > _getFilterOffset(context) ? new Positioned(
+      left: 0.0,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      child: new HbcCityFilterContianer(),
     ) : new Container();
     return new SafeArea(
       top: true,
@@ -54,17 +55,17 @@ class ListState extends State<HBCGoodList>{
                 itemCount: 33,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
-                    return new HbcCityTitle(
+                    return new HbcCityTopContianer(
                         widget.cityContent, widget.cityGuide, widget.cityService);
                   }
                   if (index == 1) {
-                    return new HbcCityTab(widget.cityService, widget.goodsCount);
+                    return new HbcCityTabContianer(widget.cityService, widget.goodsCount);
                   }
                   if (index == 2) {
-                    return new HbcCityFilter();
+                    return new HbcCityFilterContianer();
                   }
                   final Map item = widget.list[index - 3];
-                  return new HbcCityListItem(item, widget.cityGuide);
+                  return new HbcCityListItemContianer(item, widget.cityGuide);
                 },
               )
           ),
@@ -78,9 +79,16 @@ class ListState extends State<HBCGoodList>{
     var controller = new ScrollController();
     controller.addListener(() {
       double offset = controller.offset;
-      var topItem = context.size.height;
       scroll(offset);
     });
     return controller;
+  }
+
+  double _getFilterOffset(BuildContext context){
+    double topImageHeight = MediaQuery.of(context).size.width / 1.875;
+    double tabHeight = 100.0;
+    double lineCountHeight = 60.0;
+    return topImageHeight + tabHeight + lineCountHeight;
+
   }
 }

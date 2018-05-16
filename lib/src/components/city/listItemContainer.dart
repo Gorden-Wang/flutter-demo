@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../util/HBCTheme.dart';
 
-class HbcCityListItem extends StatelessWidget{
+class HbcCityListItemContianer extends StatelessWidget{
   final Map item;
   final Map cityGuide;
-  HbcCityListItem(this.item,this.cityGuide);
+  HbcCityListItemContianer(this.item,this.cityGuide);
 
   @override
   Widget build(BuildContext context) {

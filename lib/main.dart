@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'src/goods/detail/index.dart';
-import 'src/goods/detail/footer.dart';
+import 'package:myapp/src/screen/goods/index.dart';
+import 'package:myapp/src/components/goods/footer.dart';
 import 'src/util/HBCHttp.dart';
 import 'src/util/HBCHttpResponse.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';

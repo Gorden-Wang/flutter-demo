@@ -10,13 +10,12 @@ class HbcCityTopContianer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Stack(
-        alignment: Alignment.center,
+      child: HbcCommonImage(
+        cityContent['cityHeadPicture'],
+        aspectRatio: 1.875,
+        isStack: true,
+        stackAlign: AlignmentDirectional.center,
         children: <Widget>[
-          HbcCommonImage(
-            cityContent['cityHeadPicture'],
-            aspectRatio: 1.875,
-          ),
           _buildTopTexts(context),
         ],
       ),

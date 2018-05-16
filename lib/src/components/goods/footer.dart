@@ -38,9 +38,7 @@ class HbcGoodFooter extends StatelessWidget {
             ),
             child: new GestureDetector(
               onTap: (){
-//                print('12312');
                 _launchURL('sms:18510249866');
-//                print('44');
               },
               child: new Image.network(
                 IM_IMG,
@@ -98,7 +96,6 @@ class HbcGoodFooter extends StatelessWidget {
   }
 
   Future<Null> _launchURL(url) async {
-//    const url = 'sms:18510249866';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

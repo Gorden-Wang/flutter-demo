@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/src/util/HBCTheme.dart';
 
-class HbcGoodsTitle extends StatelessWidget {
+class HbcGoodsTitleContainer extends StatelessWidget {
   final String title;
   final List theme;
 
-  HbcGoodsTitle(this.title, this.theme);
+  HbcGoodsTitleContainer(this.title, this.theme);
 
   ///   title Wrap UI
   @override

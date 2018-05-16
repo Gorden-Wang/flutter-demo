@@ -35,6 +35,7 @@ class HbcCircleImage extends StatelessWidget {
   }
 }
 
+
 /// build a CachedNetworkImage
 class HbcCommonImage extends StatelessWidget {
   final Key key;
@@ -43,6 +44,9 @@ class HbcCommonImage extends StatelessWidget {
   final String placeHolderImg;
   final BoxFit fit;
   final double aspectRatio;
+  final bool isStack;
+  final AlignmentGeometry stackAlign;
+  final List<Widget> children;
 
   HbcCommonImage(@required this.url, {
     this.key,
@@ -51,17 +55,31 @@ class HbcCommonImage extends StatelessWidget {
     this.placeHolderImg = 'assets/imgs/hold.png',
     this.fit = BoxFit.cover,
     this.aspectRatio,
+    this.isStack = false,
+    this.stackAlign = AlignmentDirectional.topStart,
+    this.children
   }) : super(key:key);
 
   @override
   Widget build(BuildContext context) {
+    Widget img;
     if(aspectRatio == null){
-      return _buildImage(context);
+      img = _buildImage(context);
+    }else{
+      img = AspectRatio(
+        aspectRatio: aspectRatio,
+        child: _buildImage(context),
+      );
     }
-    return new AspectRatio(
-      aspectRatio: aspectRatio,
-      child: _buildImage(context),
-    );
+    if(isStack == true){
+      assert(children != null);
+      children.insert(0,img);
+      return Stack(
+        alignment: stackAlign,
+        children: children,
+      );
+    }
+    return img;
   }
 
   Widget _buildImage(BuildContext context){
@@ -81,3 +99,4 @@ class HbcCommonImage extends StatelessWidget {
     );
   }
 }
+

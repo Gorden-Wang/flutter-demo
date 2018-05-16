@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:myapp/src/components/lib/image.dart';
 import '../../util/HBCTheme.dart';
 
-class HbcGoodsTopImage extends StatelessWidget {
+class HbcGoodsTopContainer extends StatelessWidget {
 
   final String url, imgTitle;
-  final double width, height;
 
-  HbcGoodsTopImage({
+  HbcGoodsTopContainer({
     Key key,
     @required this.url,
-    this.width,
-    this.height,
     @required this.imgTitle
-  }) : super(key: key) {
-    print('top init');
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('top widgets');
-    return new Stack(
-      alignment: const Alignment(-1.0, 0.8),
+    return HbcCommonImage(
+      this.url,
+      aspectRatio: 1.0,
+      isStack: true,
       children: <Widget>[
-        _buildImage(context),
         new Positioned(
           bottom: 20.0,
           left: 0.0,
@@ -33,30 +28,9 @@ class HbcGoodsTopImage extends StatelessWidget {
     );
   }
 
-  Widget _buildImage(BuildContext context) {
-    final double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-
-    return new AspectRatio(
-      aspectRatio: 1.0,
-      child: new CachedNetworkImage(
-        placeholder: new DecoratedBox(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-                image: new AssetImage('assets/imgs/hold.png'),
-                fit: BoxFit.cover
-            ),
-          ),
-        ),
-        imageUrl: this.url,
-        width: width,
-        height: width,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
+//  Widget _buildImage(BuildContext context) {
+//
+//  }
 
   Container _buildImageTextContainer(BuildContext context) {
     return new Container(

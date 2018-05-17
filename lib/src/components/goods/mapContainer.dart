@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-class HbcGoodMap extends StatelessWidget{
+class HbcGoodMapContainer extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

@@ -1,17 +1,15 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 const String DAY_BG = 'https://fr-static.huangbaoche.com/20180320/icon-day.6bd0b42e4c3243a9.png';
 const String QUESTION_ICON = 'https://fr-static.huangbaoche.com/20180320/wen.8e3e27ff1f412a62.png';
 
-class HbcGoodTrip extends StatelessWidget {
+class HbcGoodTripContainer extends StatelessWidget {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
   final List trip;
   Widget cacheWidget;
 
-  HbcGoodTrip({
+  HbcGoodTripContainer({
     Key key,
     this.trip
   }) : super(key: key) {

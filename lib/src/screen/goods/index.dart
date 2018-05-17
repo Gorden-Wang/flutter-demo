@@ -4,10 +4,10 @@ import 'package:myapp/src/components/goods/titleContainer.dart';
 import 'package:myapp/src/components/goods/guideContainer.dart';
 import 'package:myapp/src/components/goods/salePoints.dart';
 import 'package:myapp/src/components/goods/routePoint.dart';
-import 'package:myapp/src/components/goods/map.dart';
-import 'package:myapp/src/components/goods/trip.dart';
+import 'package:myapp/src/components/goods/mapContainer.dart';
+import 'package:myapp/src/components/goods/tripContainer.dart';
 import 'package:myapp/src/components/goods/order.dart';
-import 'package:myapp/src/components/goods/tripList.dart';
+import 'package:myapp/src/components/goods/tripListItemContainer.dart';
 
 
 class HbcGoodsIndex extends StatelessWidget {
@@ -31,10 +31,30 @@ class HbcGoodsIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map routes = _getRouteList();
+    final int length = routes['length'];
+    final List routesList = routes['list'];
+    Map item ;
+    print(routesList);
     return new ListView.builder(
+      itemCount: 8+length,
       itemBuilder: (BuildContext context, index) {
-        print(index);
-        switch (index) {
+
+
+        if(index >= 7 && index < length+7){
+          item = routesList[index-7];
+
+          if(item['isDay'] == true){
+            return _getSamePadding(context,new HbcGoodTripDayItem(item));
+          }else{
+            return _getSamePadding(context,new HbcGoodTripListPoiItem(item));
+          }
+
+        }
+        if(index == length+7){
+          return _getSamePadding(context, new HbcGoodOrderTips());
+        }
+        switch (index ) {
           case 0 :
             return new HbcGoodsTopContainer(
                 url: getData('goodsPictures')[0],
@@ -52,13 +72,13 @@ class HbcGoodsIndex extends StatelessWidget {
           case 4 :
             return _getSamePadding(context, new HbcGoodsRoutePoint(routePointData));
           case 5 :
-            return _getSamePadding(context, new HbcGoodMap());
+            return _getSamePadding(context, new HbcGoodMapContainer());
           case 6 :
-            return _getSamePadding(context, new HbcGoodTrip(trip: getData('routes')));
-          case 7 :
-            return _getSamePadding(context, new HBCGOODTripList(trip: getData('routes')));
-          case 8 :
-            return _getSamePadding(context, new HbcGoodOrderTips());
+            return _getSamePadding(context, new HbcGoodTripContainer(trip: getData('routes')));
+//          case 7 :
+//            return _getSamePadding(context, new HbcGoodTripListContainer(trip: getData('routes')));
+//          case 8 :
+//            return _getSamePadding(context, new HbcGoodOrderTips());
 
         }
       }
@@ -124,5 +144,29 @@ class HbcGoodsIndex extends StatelessWidget {
     };
 
     return [route1, route2, route3];
+  }
+
+  Map _getRouteList(){
+    List list = getData('routes');
+    List res = [];
+    Map day;
+    List pois;
+    Map poi;
+    for(int i = 0 ; i< list.length ; i++){
+      day = list[i];
+      day['isDay'] = true;
+      pois = day['poaList'];
+      res.add(day);
+      for(int j = 0; j< pois.length ; j++){
+        poi = pois[j];
+        poi['isPoi'] = true;
+        res.add(poi);
+      }
+    }
+    return new Map.from({
+      'length' : res.length,
+      'list' : res
+    });
+
   }
 }

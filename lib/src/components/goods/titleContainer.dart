@@ -10,7 +10,7 @@ class HbcGoodsTitleContainer extends StatelessWidget {
   ///   title Wrap UI
   @override
   Widget build(BuildContext context) {
-    return new Column(
+    return Column(
       children: <Widget>[
         _buildTitleContainer(context),
         _buildKeyWordContianer(context),
@@ -21,7 +21,7 @@ class HbcGoodsTitleContainer extends StatelessWidget {
 
   /// title UI
   Widget _buildTitleContainer(BuildContext context) {
-    return new Container(
+    return Container(
         child: HBCTheme.buildText(
             text: this.title,
             fontSize: 22.0,
@@ -33,7 +33,7 @@ class HbcGoodsTitleContainer extends StatelessWidget {
   /// theme inner UI - text & split
   Widget _generateTheme(Map item, [String split]) {
     if (item != null) {
-      return new Container(
+      return Container(
           child:
           HBCTheme.buildText(
               text: item['themeName'],
@@ -42,8 +42,8 @@ class HbcGoodsTitleContainer extends StatelessWidget {
           )
       );
     } else {
-      return new Container(
-          margin: new EdgeInsets.only(
+      return Container(
+          margin: EdgeInsets.only(
             left: 5.0,
             right: 5.0,
           ),
@@ -68,18 +68,18 @@ class HbcGoodsTitleContainer extends StatelessWidget {
         keyWords.add(_generateTheme(null, '|'));
       }
     }
-    return new Container(
-      alignment: new Alignment(-1.0, -1.0),
-      margin: new EdgeInsets.only(top: 10.0, bottom: 3.0),
-      child: new Row(
+    return Container(
+      alignment: Alignment(-1.0, -1.0),
+      margin: EdgeInsets.only(top: 10.0, bottom: 3.0),
+      child: Row(
         children: keyWords,
       ),
     );
   }
 
   Widget _buildGuideTips(BuildContext context) {
-    return new Container(
-      alignment: new Alignment(-1.0, -1.0),
+    return Container(
+      alignment: Alignment(-1.0, -1.0),
       child: HBCTheme.buildText(
           text:'预定成功后，可挑选心意司导服务哦!',
           fontSize: 14.0,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HbcGoodOrderTips extends StatelessWidget {
+class HbcGoodOrderTipsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Container(
-      child: new Column(
+    return Container(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _buildTitle,
@@ -21,22 +21,22 @@ class HbcGoodOrderTips extends StatelessWidget {
   }
 
   Container get _getBuildInnerRules {
-    return new Container(
-//      margin: new EdgeInsets.only(bottom: 20.0),
-      child : new Row(
+    return Container(
+//      margin: EdgeInsets.only(bottom: 20.0),
+      child : Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Container(
-            margin : new EdgeInsets.only(right : 15.0),
-            child: new Text(
+          Container(
+            margin : EdgeInsets.only(right : 15.0),
+            child: Text(
               '退订规则',
-              style: new TextStyle(
-                color: new Color(0xff7f7f7f),
+              style: TextStyle(
+                color: Color(0xff7f7f7f),
               ),
             ),
           ),
-          new Expanded(
-            child: new Column(
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _getBuildRuleText('预订成功', 1),
@@ -72,12 +72,12 @@ class HbcGoodOrderTips extends StatelessWidget {
     } else {
       colorhax = 0xff7f7f7f;
     }
-    return new Container(
-      margin: new EdgeInsets.only(bottom: 10.0),
-      child: new Text(
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.0),
+      child: Text(
         str,
-        style: new TextStyle(
-            color: new Color(colorhax),
+        style: TextStyle(
+            color: Color(colorhax),
             fontSize: 13.0
         ),
       ),
@@ -85,37 +85,37 @@ class HbcGoodOrderTips extends StatelessWidget {
   }
 
   Container _buildInnerRow(String title, String inner,[bool isShow]) {
-    return new Container(
-      padding: new EdgeInsets.only(top: isShow == true ? 10.0 : 0.0),
-      decoration: new BoxDecoration(
-        border: new Border(
-          top: new BorderSide(
-            color: new Color(0xff00ccc),
+    return Container(
+      padding: EdgeInsets.only(top: isShow == true ? 10.0 : 0.0),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Color(0xff00ccc),
             width: isShow==true ? 1.0 : 0.0,
             style: BorderStyle.solid
 
           )
         )
       ),
-      margin: new EdgeInsets.only(bottom: 10.0),
-      child: new Row(
+      margin: EdgeInsets.only(bottom: 10.0),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Container(
-            margin: new EdgeInsets.only(right: 15.0),
-            child: new Text(
+          Container(
+            margin: EdgeInsets.only(right: 15.0),
+            child: Text(
               title,
-              style: new TextStyle(
-                color: new Color(0xff7f7f7f),
+              style: TextStyle(
+                color: Color(0xff7f7f7f),
               ),
             ),
           ),
 
-          new Expanded(
-            child: new Text(
+          Expanded(
+            child: Text(
               inner,
-              style: new TextStyle(
-                  color: new Color(0xff151515)
+              style: TextStyle(
+                  color: Color(0xff151515)
               ),
             ),
           )
@@ -125,12 +125,12 @@ class HbcGoodOrderTips extends StatelessWidget {
   }
 
   Container get _buildTitle {
-    return new Container(
-      margin: new EdgeInsets.only(bottom: 15.0),
-      child: new Text(
+    return Container(
+      margin: EdgeInsets.only(bottom: 15.0),
+      child: Text(
         '预定必读',
-        style: new TextStyle(
-            color: new Color(0xff151515),
+        style: TextStyle(
+            color: Color(0xff151515),
             fontSize: 18.0,
             fontWeight: FontWeight.w400,
             fontFamily: 'PingFang SC'

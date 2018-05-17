@@ -19,7 +19,7 @@ class HbcGoodsTopContainer extends StatelessWidget {
       aspectRatio: 1.0,
       isStack: true,
       children: <Widget>[
-        new Positioned(
+        Positioned(
           bottom: 20.0,
           left: 0.0,
           child: _buildImageTextContainer(context),
@@ -28,22 +28,18 @@ class HbcGoodsTopContainer extends StatelessWidget {
     );
   }
 
-//  Widget _buildImage(BuildContext context) {
-//
-//  }
-
   Container _buildImageTextContainer(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
+    return Container(
+      decoration: BoxDecoration(
           color: Colors.black54,
-          borderRadius: new BorderRadius.only(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.zero,
               topRight: Radius.circular(21.0),
               bottomRight: Radius.circular(21.0),
               bottomLeft: Radius.zero
           )
       ),
-      padding: new EdgeInsets.only(
+      padding: EdgeInsets.only(
           left: 20.0,
           top: 3.0,
           right: 10.0,

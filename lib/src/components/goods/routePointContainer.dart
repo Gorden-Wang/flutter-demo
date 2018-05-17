@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HbcGoodsRoutePoint extends StatelessWidget {
+class HbcGoodsRoutePointContainer extends StatelessWidget {
   /**
    * routePointMap : [
    * {
@@ -12,12 +12,12 @@ class HbcGoodsRoutePoint extends StatelessWidget {
    */
   final List routePointMap;
 
-  HbcGoodsRoutePoint(this.routePointMap);
+  HbcGoodsRoutePointContainer(this.routePointMap);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Column(
+    return Column(
       children: _buildColumItem(context),
     );
   }
@@ -26,35 +26,35 @@ class HbcGoodsRoutePoint extends StatelessWidget {
     List<Widget> _list = [];
     this.routePointMap.forEach((item) {
       _list.add(
-          new Container(
-            margin: new EdgeInsets.only(bottom: 20.0),
-            child: new Row(
+          Container(
+            margin: EdgeInsets.only(bottom: 20.0),
+            child: Row(
               children: <Widget>[
-                new Image.network(
+                Image.network(
                   item['imgUrl'],
                   width: 40.0,
                   height: 40.0,
                 ),
-                new Expanded(
-                  child: new Container(
-                      margin: new EdgeInsets.only(left : 20.0),
-                      child: new Column(
+                Expanded(
+                  child: Container(
+                      margin: EdgeInsets.only(left : 20.0),
+                      child: Column(
                         crossAxisAlignment : CrossAxisAlignment.start,
                         children: <Widget>[
-                          new Padding(
+                          Padding(
                             padding: const EdgeInsets.only(bottom: 4.0),
-                            child: new Text(
+                            child: Text(
                               item['title'],
-                              style: new TextStyle(
-                                color: new Color(0xff4a4a4a),
+                              style: TextStyle(
+                                color: Color(0xff4a4a4a),
                                 fontSize : 13.0,
                               ),
                             ),
                           ),
-                          new Text(
+                          Text(
                             item['subTitle'],
-                            style: new TextStyle(
-                              color: new Color(0xff4a4a4a),
+                            style: TextStyle(
+                              color: Color(0xff4a4a4a),
                               fontSize : 13.0,
                             ),
                           ),

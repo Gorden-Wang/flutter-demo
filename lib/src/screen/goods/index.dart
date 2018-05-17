@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:myapp/src/components/goods/topContainer.dart';
 import 'package:myapp/src/components/goods/titleContainer.dart';
 import 'package:myapp/src/components/goods/guideContainer.dart';
-import 'package:myapp/src/components/goods/salePoints.dart';
-import 'package:myapp/src/components/goods/routePoint.dart';
+import 'package:myapp/src/components/goods/salePointsContainer.dart';
+import 'package:myapp/src/components/goods/routePointContainer.dart';
 import 'package:myapp/src/components/goods/mapContainer.dart';
 import 'package:myapp/src/components/goods/tripContainer.dart';
-import 'package:myapp/src/components/goods/order.dart';
+import 'package:myapp/src/components/goods/orderContainer.dart';
 import 'package:myapp/src/components/goods/tripListItemContainer.dart';
 
 
@@ -35,12 +35,9 @@ class HbcGoodsIndex extends StatelessWidget {
     final int length = routes['length'];
     final List routesList = routes['list'];
     Map item ;
-    print(routesList);
     return new ListView.builder(
       itemCount: 8+length,
       itemBuilder: (BuildContext context, index) {
-
-
         if(index >= 7 && index < length+7){
           item = routesList[index-7];
 
@@ -52,7 +49,7 @@ class HbcGoodsIndex extends StatelessWidget {
 
         }
         if(index == length+7){
-          return _getSamePadding(context, new HbcGoodOrderTips());
+          return _getSamePadding(context, new HbcGoodOrderTipsContainer());
         }
         switch (index ) {
           case 0 :
@@ -68,18 +65,13 @@ class HbcGoodsIndex extends StatelessWidget {
             return _getSamePadding(
                 context, new HbcGoodsGuideContainer(getData('associateGuideAmount'),getData('goodsNo')));
           case 3 :
-            return _getSamePadding(context, new HbcGoodsSalePoints(getData('salePoints')));
+            return _getSamePadding(context, new HbcGoodsSalePointsContainer(getData('salePoints')));
           case 4 :
-            return _getSamePadding(context, new HbcGoodsRoutePoint(routePointData));
+            return _getSamePadding(context, new HbcGoodsRoutePointContainer(routePointData));
           case 5 :
             return _getSamePadding(context, new HbcGoodMapContainer());
           case 6 :
             return _getSamePadding(context, new HbcGoodTripContainer(trip: getData('routes')));
-//          case 7 :
-//            return _getSamePadding(context, new HbcGoodTripListContainer(trip: getData('routes')));
-//          case 8 :
-//            return _getSamePadding(context, new HbcGoodOrderTips());
-
         }
       }
     );
@@ -167,6 +159,5 @@ class HbcGoodsIndex extends StatelessWidget {
       'length' : res.length,
       'list' : res
     });
-
   }
 }

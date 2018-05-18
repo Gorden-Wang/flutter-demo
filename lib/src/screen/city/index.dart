@@ -41,7 +41,7 @@ class ListState extends State<HBCGoodList>{
           .of(context)
           .size
           .width,
-      child: new HbcCityFilterContianer(),
+      child: new HbcCityFilterContainer(),
     ) : new Container();
     return new SafeArea(
       top: true,
@@ -55,17 +55,17 @@ class ListState extends State<HBCGoodList>{
                 itemCount: 33,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
-                    return new HbcCityTopContianer(
+                    return new HbcCityTopContainer(
                         widget.cityContent, widget.cityGuide, widget.cityService);
                   }
                   if (index == 1) {
-                    return new HbcCityTabContianer(widget.cityService, widget.goodsCount);
+                    return new HbcCityTabContainer(widget.cityService, widget.goodsCount);
                   }
                   if (index == 2) {
-                    return new HbcCityFilterContianer();
+                    return new HbcCityFilterContainer();
                   }
                   final Map item = widget.list[index - 3];
-                  return new HbcCityListItemContianer(item, widget.cityGuide);
+                  return new HbcCityListItemContainer(item, widget.cityGuide);
                 },
               )
           ),

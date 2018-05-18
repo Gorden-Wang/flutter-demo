@@ -15,7 +15,8 @@ class HbcGoodsDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       theme: new ThemeData(
-          primaryColor: Colors.white
+          primaryColor: Colors.white,
+          fontFamily: 'PingFang SC Regular'
       ),
       home: new Container(
         color: Colors.white,

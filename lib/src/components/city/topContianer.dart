@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../util/HBCTheme.dart';
 import 'package:myapp/src/components/lib/image.dart';
+import 'package:myapp/src/components/lib/text.dart';
 
-class HbcCityTopContianer extends StatelessWidget {
+class HbcCityTopContainer extends StatelessWidget {
   final Map cityContent, cityGuides, cityService;
 
-  HbcCityTopContianer(this.cityContent, this.cityGuides, this.cityService);
+  HbcCityTopContainer(this.cityContent, this.cityGuides, this.cityService);
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +27,24 @@ class HbcCityTopContianer extends StatelessWidget {
         child: Container(
             child: Column(
               children: <Widget>[
-                HBCTheme.buildText(
-                    text: cityContent['cityName'],
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600
+                Text(
+                  cityContent['cityName'],
+                  style: HbcCommonTextStyle
+                      .withWhiteColor(context)
+                      .headline,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: HBCTheme.buildText(
-                      text: '${cityGuides['guideAmount']}位当地中文司导',
-                      color: Colors.white,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600
+                  child: Text(
+                    '${cityGuides['guideAmount']}位当地中文司导',
+                    style: HbcCommonTextStyle
+                        .withWhiteColor(context)
+                        .body2,
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buidTopGuideList(context),
+                  children: _buildTopGuideList(context),
                 )
               ],
             )
@@ -52,7 +52,7 @@ class HbcCityTopContianer extends StatelessWidget {
     );
   }
 
-  List<Widget> _buidTopGuideList(BuildContext context) {
+  List<Widget> _buildTopGuideList(BuildContext context) {
     List res = <Widget>[];
     List source = cityGuides['guideAvatars'];
     for (int i = 0; i < source.length; i++) {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/src/util/HBCTheme.dart';
+import 'package:myapp/src/components/lib/text.dart';
 
-class HbcCityTabContianer extends StatelessWidget {
+class HbcCityTabContainer extends StatelessWidget {
   final Map cityService;
   final int hasAirporService;
   final int hasDailyservice;
   final int hasSingleService;
   final int goodsCount;
 
-  HbcCityTabContianer(this.cityService, this.goodsCount)
+  HbcCityTabContainer(this.cityService, this.goodsCount)
       :
         this.hasAirporService = cityService['hasSingleService'],
         this.hasDailyservice = cityService['hasDailyservice'],
@@ -17,7 +17,7 @@ class HbcCityTabContianer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    List rows = _buildRow();
+    List rows = _buildRow(context);
     if (rows.length > 0) {
       return Container(
         color: Colors.white,
@@ -46,11 +46,11 @@ class HbcCityTabContianer extends StatelessWidget {
           Icon(Icons.directions),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(left: 10.0),
-              child: HBCTheme.buildText(
-                  text: '${this.goodsCount}种包车路线或玩法',
-                  fontSize: 13.0
-              ),
+                margin: EdgeInsets.only(left: 10.0),
+                child: Text(
+                  '${this.goodsCount}种包车路线或玩法',
+                  style: HbcCommonTextStyle(context).body1,
+                )
             ),
           )
 
@@ -59,7 +59,7 @@ class HbcCityTabContianer extends StatelessWidget {
     );
   }
 
-  List _buildRow() {
+  List _buildRow(BuildContext context) {
     List<Widget> res = [];
 
     if (hasDailyservice == 1) {
@@ -68,7 +68,7 @@ class HbcCityTabContianer extends StatelessWidget {
         'icon': Icon(Icons.directions_car, color: Colors.white),
         'text': '按天包车游'
       };
-      res.add(_buildRowItem(res.length, item));
+      res.add(_buildRowItem(context, res.length, item));
     }
     if (hasAirporService == 1) {
       Map item = {
@@ -76,7 +76,7 @@ class HbcCityTabContianer extends StatelessWidget {
         'icon': Icon(Icons.flight_takeoff, color: Colors.white),
         'text': '接送机'
       };
-      res.add(_buildRowItem(res.length, item));
+      res.add(_buildRowItem(context, res.length, item));
     }
     if (hasSingleService == 1) {
       Map item = {
@@ -84,14 +84,14 @@ class HbcCityTabContianer extends StatelessWidget {
         'icon': Icon(Icons.directions, color: Colors.white),
         'text': '接送机'
       };
-      res.add(_buildRowItem(res.length, item));
+      res.add(_buildRowItem(context, res.length, item));
     }
     if (res.length > 0)
       return res;
     return [];
   }
 
-  Widget _buildRowItem(int length, Map item) {
+  Widget _buildRowItem(context, int length, Map item) {
     var border = length == 2 ? null : Border(
         right: BorderSide(
             width: 1.0,
@@ -119,9 +119,9 @@ class HbcCityTabContianer extends StatelessWidget {
                 ),
                 child: item['icon']
             ),
-            HBCTheme.buildText(
-              text: item['text'],
-              fontSize: 13.0,
+            Text(
+              item['text'],
+              style: HbcCommonTextStyle(context).body1,
             )
           ],
         ),

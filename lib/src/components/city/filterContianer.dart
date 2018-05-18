@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/src/util/HBCTheme.dart';
-class HbcCityFilterContianer extends StatefulWidget {
+
+import 'package:myapp/src/components/lib/text.dart';
+
+class HbcCityFilterContainer extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
@@ -10,7 +12,7 @@ class HbcCityFilterContianer extends StatefulWidget {
 
 }
 
-class FilterState extends State<HbcCityFilterContianer> {
+class FilterState extends State<HbcCityFilterContainer> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -26,9 +28,9 @@ class FilterState extends State<HbcCityFilterContianer> {
       ),
       child: new Row(
         children: <Widget>[
-          new _FilterItem(const {'title':'类型','isBorder':true}),
-          new _FilterItem(const {'title':'天数','isBorder':true}),
-          new _FilterItem(const {'title':'主题','isBorder':false}),
+          new _FilterItem(const {'title': '类型', 'isBorder': true}),
+          new _FilterItem(const {'title': '天数', 'isBorder': true}),
+          new _FilterItem(const {'title': '主题', 'isBorder': false}),
         ],
       ),
     );
@@ -36,13 +38,13 @@ class FilterState extends State<HbcCityFilterContianer> {
 }
 
 
-
-class _FilterItem extends StatefulWidget{
+class _FilterItem extends StatefulWidget {
   final Map item;
   final String title;
   final bool isBorder;
 
-  _FilterItem(this.item):
+  _FilterItem(this.item)
+      :
         this.title = item['title'],
         this.isBorder = item['isBorder'];
 
@@ -53,8 +55,9 @@ class _FilterItem extends StatefulWidget{
   }
 }
 
-class HbcCityFilterState extends State<_FilterItem>{
+class HbcCityFilterState extends State<_FilterItem> {
   bool isClick = false;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -73,7 +76,8 @@ class HbcCityFilterState extends State<_FilterItem>{
       );
     }
 
-    Icon icon = isClick == false ? new Icon(Icons.arrow_drop_down) : new Icon(Icons.arrow_drop_up);
+    Icon icon = isClick == false ? new Icon(Icons.arrow_drop_down) : new Icon(
+        Icons.arrow_drop_up);
 
     return new Expanded(
       child: new GestureDetector(
@@ -87,10 +91,11 @@ class HbcCityFilterState extends State<_FilterItem>{
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              HBCTheme.buildText(
-                text: string,
-                fontSize: 16.0,
+              Text(
+                string,
+                style: HbcCommonTextStyle(context).button,
               ),
+
               new Container(
                 child: icon,
               )
@@ -101,7 +106,7 @@ class HbcCityFilterState extends State<_FilterItem>{
     );
   }
 
-  _tapHandler(){
+  _tapHandler() {
     setState(() {
       isClick = !isClick;
     });

@@ -23,7 +23,7 @@ class HBCTheme {
   }) {
     color ??= Colors.grey.shade800;
     fontWeight ??= FontWeight.normal;
-    fontFamily ??= 'PingFang SC';
+    fontFamily ??= 'PingFang SC Regular';
     height ??= 1.0;
     decoration ??= TextDecoration.none;
     return new Text(

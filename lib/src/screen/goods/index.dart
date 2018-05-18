@@ -38,19 +38,6 @@ class HbcGoodsIndex extends StatelessWidget {
     return new ListView.builder(
       itemCount: 8+length,
       itemBuilder: (BuildContext context, index) {
-        if(index >= 7 && index < length+7){
-          item = routesList[index-7];
-
-          if(item['isDay'] == true){
-            return _getSamePadding(context,new HbcGoodTripDayItem(item));
-          }else{
-            return _getSamePadding(context,new HbcGoodTripListPoiItem(item));
-          }
-
-        }
-        if(index == length+7){
-          return _getSamePadding(context, new HbcGoodOrderTipsContainer());
-        }
         switch (index ) {
           case 0 :
             return new HbcGoodsTopContainer(
@@ -72,6 +59,20 @@ class HbcGoodsIndex extends StatelessWidget {
             return _getSamePadding(context, new HbcGoodMapContainer());
           case 6 :
             return _getSamePadding(context, new HbcGoodTripContainer(trip: getData('routes')));
+        }
+
+        if(index >= 7 && index < length+7){
+          item = routesList[index-7];
+
+          if(item['isDay'] == true){
+            return _getSamePadding(context,new HbcGoodTripDayItem(item));
+          }else{
+            return _getSamePadding(context,new HbcGoodTripListPoiItem(item));
+          }
+
+        }
+        if(index == length+7){
+          return _getSamePadding(context, new HbcGoodOrderTipsContainer());
         }
       }
     );

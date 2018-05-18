@@ -1,110 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../util/HBCTheme.dart';
 
-class HbcCityListItemContianer extends StatelessWidget{
+import 'package:myapp/src/components/lib/text.dart';
+
+class HbcCityListItemContainer extends StatelessWidget {
   final Map item;
   final Map cityGuide;
-  HbcCityListItemContianer(this.item,this.cityGuide);
+
+  HbcCityListItemContainer(this.item, this.cityGuide);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new GestureDetector(
-      onTap: (){
+    return GestureDetector(
+      onTap: () {
         Navigator.of(context).pushNamed('/goods/${item['goodsNo']}');
       },
-      child:  new Container(
+      child: Container(
         color: Colors.white,
-        padding: new EdgeInsets.all(20.0),
-        margin: new EdgeInsets.only(bottom: 15.0),
-        child: _buildListItem(context,item),
+        padding: EdgeInsets.all(20.0),
+        margin: EdgeInsets.only(bottom: 15.0),
+        child: _buildListItem(context, item),
       ),
     );
   }
-  Widget _buildListItem(BuildContext context,Map item) {
-    return new Column(
+
+  Widget _buildListItem(BuildContext context, Map item) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _buildItemImgContianer(
             context,
-            url : '${item['goodsPicture']}',
-            title : '${item['headLable']}',
+            url: '${item['goodsPicture']}',
+            title: '${item['headLable']}',
             subTitle: '${cityGuide['guideAmount']}'
         ),
         _buildItemTitle(context, '${item['goodsName']}'),
-        _buildItemPrice(context, '${item['perPrice']}')
+        _buildItemPrice(context, '${item['perPrice']}', '${item['daysCount']}')
 
       ],
     );
   }
 
   Widget _buildItemImgContianer(BuildContext context,
-      {String title, String subTitle,String url}) {
-    return new Stack(
+      {String title, String subTitle, String url}) {
+    return Stack(
       children: <Widget>[
         _buildItemImg(
             context, url),
-        _buildItemTag(context,title: title),
-        _buildItemTip(context,subTitle:subTitle)
+        _buildItemTag(context, title: title),
+        _buildItemTip(context, subTitle: subTitle)
       ],
     );
   }
 
-  Widget _buildItemTag(BuildContext context,{String title}){
-    Color color = title == '超省心' ? new Color(0xff8bd36d) : new Color(0xff69cbd6);
-    return new Positioned(
+  Widget _buildItemTag(BuildContext context, {String title}) {
+    Color color = title == '超省心' ? Color(0xff8bd36d) : Color(
+        0xff69cbd6);
+    return Positioned(
       top: 20.0,
-      child: new Container(
-        padding: new EdgeInsets.only(
-            top: 3.0,
-            right: 8.0,
-            bottom: 3.0,
-            left: 8.0
-        ),
-        decoration: new BoxDecoration(
-            color: color,
-            borderRadius : new BorderRadius.only(
-                topRight: new Radius.circular(30.0),
-                bottomRight: new Radius.circular(30.0)
-            )
-        ),
-        child: HBCTheme.buildText(
-            text: title,
-            fontSize: 13.0,
-            color: Colors.white
-        ),
+      child: Container(
+          padding: EdgeInsets.only(
+              top: 3.0,
+              right: 8.0,
+              bottom: 3.0,
+              left: 8.0
+          ),
+          decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30.0),
+                  bottomRight: Radius.circular(30.0)
+              )
+          ),
+          child: Text(
+            title,
+            style: HbcCommonTextStyle
+                .withWhiteColor(context)
+                .caption,
+          )
       ),
     );
   }
 
-  Widget _buildItemTip(BuildContext context,{String subTitle}){
-    return new Positioned(
+  Widget _buildItemTip(BuildContext context, {String subTitle}) {
+    return Positioned(
       bottom: 15.0,
-      child: new Container(
-        padding: new EdgeInsets.only(
-            top:3.0,
+      child: Container(
+        padding: EdgeInsets.only(
+            top: 3.0,
             right: 5.0,
             bottom: 3.0,
             left: 5.0
         ),
-        decoration: new BoxDecoration(
-            color: new Color.fromARGB(100,0,0,0),
-            borderRadius : new BorderRadius.only(
-                topRight: new Radius.circular(30.0),
-                bottomRight: new Radius.circular(30.0)
+        decoration: BoxDecoration(
+            color: Color.fromARGB(100, 0, 0, 0),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30.0),
+                bottomRight: Radius.circular(30.0)
             )
         ),
-        child: new Row(
+        child: Row(
           children: <Widget>[
-            HBCTheme.buildText(
-              text: '${subTitle} 位当地中文司导',
-              fontSize: 13.0,
-              color: Colors.white,
+            Text(
+              '${subTitle} 位当地中文司导',
+              style: HbcCommonTextStyle
+                  .withWhiteColor(context)
+                  .caption,
             ),
-            new Container(
-              margin: new EdgeInsets.only(left:5.0),
-              child: new Image.network(
+            Container(
+              margin: EdgeInsets.only(left: 5.0),
+              child: Image.network(
                 'https://fr-static.huangbaoche.com/20180313/guide.0ca8d80948c9964b.png',
                 width: 15.0,
                 height: 15.0,
@@ -118,13 +124,13 @@ class HbcCityListItemContianer extends StatelessWidget{
   }
 
   Widget _buildItemImg(BuildContext context, String url) {
-    return new AspectRatio(
+    return AspectRatio(
       aspectRatio: 2.0,
-      child: new CachedNetworkImage(
-        placeholder: new DecoratedBox(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-                image: new AssetImage('assets/imgs/hold.png'),
+      child: CachedNetworkImage(
+        placeholder: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/imgs/hold.png'),
                 fit: BoxFit.cover
             ),
           ),
@@ -140,39 +146,41 @@ class HbcCityListItemContianer extends StatelessWidget{
   }
 
   Widget _buildItemTitle(BuildContext context, String title) {
-    return new Container(
-      margin: new EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: HBCTheme.buildText(
-          text: title,
-          fontSize: 18.0,
-          color: Colors.grey.shade800,
-          fontWeight: FontWeight.w400
+    TextStyle styleCandS = TextStyle(
+      fontSize: 18.0,
+    );
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: Text(
+        title,
+        style: HbcCommonTextStyle(context, style: styleCandS).body2,
       ),
     );
   }
 
-  Widget _buildItemPrice(BuildContext context, String price) {
-    return new Row(
+  Widget _buildItemPrice(BuildContext context, String price, String dayCount) {
+    TextStyle styleColor = TextStyle(
+        color: Color(0xfff63000)
+    );
+    TextStyle styleCandS = TextStyle(
+      color: Color(0xfff63000),
+    );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        HBCTheme.buildText(
-            text: '￥',
-            fontSize: 14.0,
-            fontWeight: FontWeight.w400,
-            color: new Color(0xfff63000)
+        Text(
+          '￥',
+          style: HbcCommonTextStyle(context, style: styleColor).body2,
         ),
-
-        HBCTheme.buildText(
-            text: price,
-            fontSize: 18.0,
-            fontWeight: FontWeight.w400,
-            color: new Color(0xfff63000)
+        Text(
+          price,
+          style: HbcCommonTextStyle(context, style: styleCandS).title,
         ),
-        new Container(
-          margin: new EdgeInsets.only(left: 8.0),
-          child: HBCTheme.buildText(
-              text: '起/人.1日',
-              fontSize: 14.0,
-              color: Colors.grey.shade500
+        Container(
+          margin: EdgeInsets.only(left: 8.0),
+          child: Text(
+            '起/人.${dayCount}日',
+            style: HbcCommonTextStyle(context).caption,
           ),
         )
       ],

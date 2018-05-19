@@ -24,10 +24,10 @@ class HBCGoodList extends StatefulWidget {
   ListState createState() => new ListState();
 }
 
-class ListState extends State<HBCGoodList>{
+class ListState extends State<HBCGoodList> {
   double _scroll = 0.0;
 
-  void scroll(position){
+  void scroll(position) {
     setState(() {
       _scroll = position;
     });
@@ -43,6 +43,7 @@ class ListState extends State<HBCGoodList>{
           .width,
       child: new HbcCityFilterContainer(),
     ) : new Container();
+    List list = getListViewData();
     return new SafeArea(
       top: true,
       bottom: false,
@@ -52,20 +53,22 @@ class ListState extends State<HBCGoodList>{
               color: new Color(0xfff5f5f5),
               child: new ListView.builder(
                 controller: _getController(context),
-                itemCount: 33,
+                itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return new HbcCityTopContainer(
-                        widget.cityContent, widget.cityGuide, widget.cityService);
+                  switch (list[index]['BUILDTYPE']) {
+                    case 'topContainer' :
+                      return new HbcCityTopContainer(
+                          widget.cityContent, widget.cityGuide,
+                          widget.cityService);
+                    case 'tabContainer' :
+                      return new HbcCityTabContainer(
+                          widget.cityService, widget.goodsCount);
+                    case 'filterContainer' :
+                      return new HbcCityFilterContainer();
+                    default :
+                      return new HbcCityListItemContainer(
+                          list[index], widget.cityGuide);
                   }
-                  if (index == 1) {
-                    return new HbcCityTabContainer(widget.cityService, widget.goodsCount);
-                  }
-                  if (index == 2) {
-                    return new HbcCityFilterContainer();
-                  }
-                  final Map item = widget.list[index - 3];
-                  return new HbcCityListItemContainer(item, widget.cityGuide);
                 },
               )
           ),
@@ -75,20 +78,40 @@ class ListState extends State<HBCGoodList>{
     );
   }
 
+  List getListViewData() {
+    List list = [
+      {
+        'BUILDTYPE': 'topContainer',
+      },
+      {
+        'BUILDTYPE': 'tabContainer',
+      },
+      {
+        'BUILDTYPE': 'filterContainer',
+      },
+    ];
+
+    list.addAll(widget.list);
+    return list;
+  }
+
   ScrollController _getController(BuildContext context) {
     var controller = new ScrollController();
     controller.addListener(() {
       double offset = controller.offset;
+      print(controller.position.maxScrollExtent);
       scroll(offset);
     });
     return controller;
   }
 
-  double _getFilterOffset(BuildContext context){
-    double topImageHeight = MediaQuery.of(context).size.width / 1.875;
+  double _getFilterOffset(BuildContext context) {
+    double topImageHeight = MediaQuery
+        .of(context)
+        .size
+        .width / 1.875;
     double tabHeight = 100.0;
     double lineCountHeight = 60.0;
     return topImageHeight + tabHeight + lineCountHeight;
-
   }
 }

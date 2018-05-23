@@ -7,33 +7,51 @@ class HbcCityFilterContainer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new FilterState();
+    return FilterState();
   }
 
 }
 
 class FilterState extends State<HbcCityFilterContainer> {
+  bool isClick = false;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Container(
-      decoration: new BoxDecoration(
+    return IndexedStack(
+      children: <Widget>[
+        _buildFilterContainer
+      ],
+    );
+  }
+
+  Container get _buildFilterContainer {
+    return Container(
+      decoration: BoxDecoration(
           color: Colors.white,
-          border: new Border(
-              bottom: new BorderSide(
+          border: Border(
+              bottom: BorderSide(
                 width: 1.0,
                 color: Colors.grey.shade300,
               )
           )
       ),
-      child: new Row(
+      child: Row(
         children: <Widget>[
-          new _FilterItem(const {'title': '类型', 'isBorder': true}),
-          new _FilterItem(const {'title': '天数', 'isBorder': true}),
-          new _FilterItem(const {'title': '主题', 'isBorder': false}),
+          _FilterItem(const {'title': '类型', 'isBorder': true},clickHandle),
+          _FilterItem(const {'title': '天数', 'isBorder': true},clickHandle),
+          _FilterItem(const {'title': '主题', 'isBorder': false},clickHandle),
         ],
       ),
     );
+  }
+
+  void clickHandle(Map item) {
+    setState(() {
+      isClick = !isClick;
+      print(isClick);
+      print(item);
+    });
   }
 }
 
@@ -42,8 +60,9 @@ class _FilterItem extends StatefulWidget {
   final Map item;
   final String title;
   final bool isBorder;
+  final Function clickHandle;
 
-  _FilterItem(this.item)
+  _FilterItem(this.item,this.clickHandle)
       :
         this.title = item['title'],
         this.isBorder = item['isBorder'];
@@ -51,8 +70,9 @@ class _FilterItem extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new HbcCityFilterState();
+    return HbcCityFilterState();
   }
+
 }
 
 class HbcCityFilterState extends State<_FilterItem> {
@@ -67,8 +87,8 @@ class HbcCityFilterState extends State<_FilterItem> {
   Widget _buildItem(BuildContext context, String string, bool isBorder) {
     var border = null;
     if (isBorder == true) {
-      border = new Border(
-          right: new BorderSide(
+      border = Border(
+          right: BorderSide(
               width: 1.0,
               color: Colors.grey.shade300,
               style: BorderStyle.solid
@@ -76,19 +96,20 @@ class HbcCityFilterState extends State<_FilterItem> {
       );
     }
 
-    Icon icon = isClick == false ? new Icon(Icons.arrow_drop_down) : new Icon(
+    Icon container = isClick == false ? Icon(Icons.arrow_drop_down)
+        : Icon(
         Icons.arrow_drop_up);
 
-    return new Expanded(
-      child: new GestureDetector(
+    return Expanded(
+      child: GestureDetector(
         onTap: _tapHandler,
-        child: new Container(
-          margin: new EdgeInsets.only(top: 15.0, bottom: 15.0),
+        child: Container(
+          margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
           alignment: Alignment.center,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               border: border
           ),
-          child: new Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
@@ -96,8 +117,8 @@ class HbcCityFilterState extends State<_FilterItem> {
                 style: HbcCommonTextStyle(context).button,
               ),
 
-              new Container(
-                child: icon,
+              Container(
+                child: container,
               )
             ],
           ),
@@ -109,6 +130,7 @@ class HbcCityFilterState extends State<_FilterItem> {
   _tapHandler() {
     setState(() {
       isClick = !isClick;
+      widget.clickHandle != null ? widget.clickHandle(widget.item) : null;
     });
   }
 }

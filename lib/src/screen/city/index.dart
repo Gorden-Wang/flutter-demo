@@ -7,7 +7,7 @@ import 'package:myapp/src/components/city/listItemContainer.dart';
 import 'package:myapp/src/components/city/tabContianer.dart';
 import 'package:myapp/src/components/city/filterContianer.dart';
 
-const double BOTTOMOPTION = 300.0;
+const double BOTTOMPOSITION = 300.0;
 const int LIMIT = 10;
 
 class HBCGoodList extends StatefulWidget {
@@ -15,31 +15,32 @@ class HBCGoodList extends StatefulWidget {
   final List list;
   final Map cityGuide, cityContent, cityService;
   final int goodsCount;
-  List listViewData;
 
+  List get listViewData => _getListViewData();
 
   HBCGoodList(this.data)
       :
-        this.list=data['goodses'],
+        this.list = data['goodses'],
         this.cityGuide = data['cityGuides'],
         this.cityContent = data['cityContent'],
         this.cityService = data['cityService'],
-        this.goodsCount = data['goodsCount']{
-    listViewData = getListViewData();
-  }
+        this.goodsCount = data['goodsCount'];
 
 
-  List getListViewData() {
+
+
+
+  List _getListViewData() {
     List list = [
-      {
+      Map.from({
         'BUILDTYPE': 'topContainer',
-      },
-      {
+      }),
+      Map.from({
         'BUILDTYPE': 'tabContainer',
-      },
-      {
+      }),
+      Map.from({
         'BUILDTYPE': 'filterContainer',
-      },
+      }),
     ];
 
     list.addAll(this.list);
@@ -47,25 +48,32 @@ class HBCGoodList extends StatefulWidget {
   }
 
   @override
-  ListState createState() => ListState(listViewData,(goodsCount/LIMIT).ceil());
+  ListState createState() =>
+      ListState(listViewData, (goodsCount / LIMIT).ceil());
+
 }
 
 class ListState extends State<HBCGoodList> {
+  final int pageCount; // default fetch api count;
   double _scroll = 0.0; //  default scroll offset
   bool _isFetch; // chick is fetching api;
   List listViewData; // default listView data;
-  final int pageCount; // default fetch api count;
   int count; // default listView count;
-  int offset = 1;
+  int offset = 1; // default api offset;
+
+  ListState(this.listViewData, this.pageCount)
+      : this.count = listViewData.length,
+        this._isFetch = false;
 
 
-  ListState(this.listViewData,this.pageCount): this.count = listViewData.length,this._isFetch = false;
 
-  void scroll(double position,double maxScrollExtent) {
+
+  void scroll(double position, double maxScrollExtent) {
     double diff = maxScrollExtent - position;
-    if(diff <= BOTTOMOPTION && diff >= 0 && _isFetch == false && offset <= pageCount){
+    if (diff <= BOTTOMPOSITION && diff >= 0 && _isFetch == false &&
+        offset <= pageCount) {
       _isFetch = true;
-      _fetchData().then((value){
+      _fetchData().then((value) {
         listViewData.addAll(value.resData['goodses']);
         count = listViewData.length;
         _isFetch = false;
@@ -127,7 +135,7 @@ class ListState extends State<HBCGoodList> {
     controller.addListener(() {
       double offset = controller.offset;
       double maxScrollExtent = controller.position.maxScrollExtent;
-      scroll(offset,maxScrollExtent);
+      scroll(offset, maxScrollExtent);
     });
     return controller;
   }
@@ -142,9 +150,9 @@ class ListState extends State<HBCGoodList> {
     return topImageHeight + tabHeight + lineCountHeight;
   }
 
-  Future<HBCHttpResponse> _fetchData(){
+  Future<HBCHttpResponse> _fetchData() {
     return HBCHttp(
         url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=${offset}&limit=${LIMIT}',
-        ak: 'aaa').get();
+        ak: 'test').get();
   }
 }

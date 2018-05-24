@@ -12,7 +12,7 @@ const int LIMIT = 10;
 
 class HBCGoodList extends StatefulWidget {
   final Map data;
-  final List list;
+  final List list,goodsThemes;
   final Map cityGuide, cityContent, cityService;
   final int goodsCount;
 
@@ -23,6 +23,7 @@ class HBCGoodList extends StatefulWidget {
         this.list = data['goodses'],
         this.cityGuide = data['cityGuides'],
         this.cityContent = data['cityContent'],
+        this.goodsThemes = data['goodsThemes'],
         this.cityService = data['cityService'],
         this.goodsCount = data['goodsCount'];
 
@@ -66,8 +67,6 @@ class ListState extends State<HBCGoodList> {
         this._isFetch = false;
 
 
-
-
   void scroll(double position, double maxScrollExtent) {
     double diff = maxScrollExtent - position;
     if (diff <= BOTTOMPOSITION && diff >= 0 && _isFetch == false &&
@@ -93,7 +92,7 @@ class ListState extends State<HBCGoodList> {
           .of(context)
           .size
           .width,
-      child: HbcCityFilterContainer(),
+      child: HbcCityFilterContainer(widget.goodsThemes),
     ) : Container();
 
     return SafeArea(
@@ -116,7 +115,7 @@ class ListState extends State<HBCGoodList> {
                       return HbcCityTabContainer(
                           widget.cityService, widget.goodsCount);
                     case 'filterContainer' :
-                      return HbcCityFilterContainer();
+                      return HbcCityFilterContainer(widget.goodsThemes);
                     default :
                       return HbcCityListItemContainer(
                           listViewData[index], widget.cityGuide);

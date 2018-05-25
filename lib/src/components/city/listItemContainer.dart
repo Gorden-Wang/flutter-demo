@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluro/fluro.dart';
+import 'package:myapp/src/router/application.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:myapp/src/components/lib/text.dart';
@@ -14,7 +16,13 @@ class HbcCityListItemContainer extends StatelessWidget {
     // TODO: implement build
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/goods/${item['goodsNo']}');
+        String route = "/goods?goodsNo=${item['goodsNo']}";
+        TransitionType transitionType = TransitionType.native;
+        Application.router.navigateTo(
+            context, route,
+            transition: transitionType).then((result) {
+          // when back callback ?
+        });
       },
       child: Container(
         color: Colors.white,

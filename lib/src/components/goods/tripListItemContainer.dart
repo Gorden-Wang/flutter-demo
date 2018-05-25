@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluro/fluro.dart';
+import 'package:myapp/src/router/application.dart';
 import 'package:myapp/src/components/lib/image.dart';
 
 
@@ -164,7 +166,12 @@ class HbcGoodTripListPoiItem extends StatelessWidget{
 //              _launchURL(context,
 //                  'https://goods.huangbaoche.com/goods/poi/${item['poiId']}',
 //                  item['poiName']);
-              Navigator.of(context).pushNamed('/poi/${item['poiId']}');
+              final String route = '/poi?poiId=${item['poiId']}';
+              final transitionType = TransitionType.fadeIn;
+              Application.router.navigateTo(context, route,transition: transitionType).then((res){
+
+              });
+
             },
             child: Container(
                 margin: EdgeInsets.only(bottom: 10.0),

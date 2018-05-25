@@ -92,7 +92,6 @@ class HbcGoodsIndex extends StatelessWidget {
 
   List<Map> _getRoutePointData() {
     final dayCount = getData('daysCount');
-    final totalDistance = getData('totalDistance');
     final routeCityDesc = getData('routeCityDesc');
     final boardingTimeStart = getData('boardingTimeStart');
     final boardingTimeEnd = getData('boardingTimeEnd');
@@ -111,7 +110,7 @@ class HbcGoodsIndex extends StatelessWidget {
           } else {
             _d = _darr.getRange(0, _length).join('、');
           }
-          return '${_d}等${carTypeNum}种车型';
+          return '$_d等$carTypeNum种车型';
         }
         return '没有可服务车型';
       }
@@ -120,19 +119,19 @@ class HbcGoodsIndex extends StatelessWidget {
 
     final Map route1 = {
       'imgUrl': 'https://fr-static.huangbaoche.com/20180305/route-info1.66769120966ac3f8.png',
-      'title': '${dayCount}天,(约${totalDistance}公里)',
-      'subTitle': '${routeCityDesc}'
+      'title': '$dayCount天,(约totalDistance公里)',
+      'subTitle': '$routeCityDesc'
     };
     final Map route2 = {
       'imgUrl': 'https://fr-static.huangbaoche.com/20180305/route-info2.3a7c8c14c30f8a67.png',
-      'title': '上车时间可协调更改，建议${boardingTimeStart}${boardingTimeEnd != null
-          ? '~${boardingTimeEnd}'
+      'title': '上车时间可协调更改，建议$boardingTimeStart${boardingTimeEnd != null
+          ? '~$boardingTimeEnd'
           : ''}',
       'subTitle': '酒店门口／机场／指定地点接送'
     };
     final Map route3 = {
       'imgUrl': 'https://fr-static.huangbaoche.com/20180305/route-info3.ac42ea4631d85fd8.png',
-      'title': '中文服务，可接待(1${maxCapOfPerson != 0 ? '~${maxCapOfPerson}' : ''}人)',
+      'title': '中文服务，可接待(1${maxCapOfPerson != 0 ? '~$maxCapOfPerson' : ''}人)',
       'subTitle': _getRout3SubTitle(),
     };
 

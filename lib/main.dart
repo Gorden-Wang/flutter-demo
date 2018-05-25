@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:myapp/src/screen/goods/index.dart';
 import 'package:myapp/src/components/goods/footer.dart';
 import 'src/util/HBCHttp.dart';
@@ -112,22 +111,22 @@ class HbcGoodsDetail extends StatelessWidget {
         )
     );
   }
-
-  Future<Null> _launchURL(BuildContext context, String url,
-      String title) async {
-    Navigator.push(context, MaterialPageRoute<void>(
-        builder: (BuildContext context)
-    {
-      return WebviewScaffold(
-        url: url,
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        withZoom: true,
-        withLocalStorage: true,
-      );
-    }
-    )
-    );
-  }
+//
+//  Future<Null> _launchURL(BuildContext context, String url,
+//      String title) async {
+//    Navigator.push(context, MaterialPageRoute<void>(
+//        builder: (BuildContext context)
+//    {
+//      return WebviewScaffold(
+//        url: url,
+//        appBar: AppBar(
+//          title: Text(title),
+//        ),
+//        withZoom: true,
+//        withLocalStorage: true,
+//      );
+//    }
+//    )
+//    );
+//  }
 }

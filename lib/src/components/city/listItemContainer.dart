@@ -103,7 +103,7 @@ class HbcCityListItemContainer extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Text(
-              '${subTitle} 位当地中文司导',
+              '$subTitle 位当地中文司导',
               style: HbcCommonTextStyle
                   .withWhiteColor(context)
                   .caption,
@@ -179,7 +179,7 @@ class HbcCityListItemContainer extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 8.0),
           child: Text(
-            '起/人.${dayCount}日',
+            '起/人.$dayCount日',
             style: HbcCommonTextStyle(context).caption,
           ),
         )

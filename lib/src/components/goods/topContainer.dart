@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/src/components/lib/image.dart';
-import '../../util/HBCTheme.dart';
+import 'package:myapp/src/components/lib/text.dart';
 
 class HbcGoodsTopContainer extends StatelessWidget {
 
@@ -23,13 +23,14 @@ class HbcGoodsTopContainer extends StatelessWidget {
           bottom: 20.0,
           left: 0.0,
           child: _buildImageTextContainer(context),
-        )
+        ),
       ],
     );
   }
 
-  Container _buildImageTextContainer(BuildContext context) {
+  Widget _buildImageTextContainer(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       decoration: BoxDecoration(
           color: Colors.black54,
           borderRadius: BorderRadius.only(
@@ -40,7 +41,7 @@ class HbcGoodsTopContainer extends StatelessWidget {
           )
       ),
       padding: EdgeInsets.only(
-          left: 20.0,
+          left: 15.0,
           top: 3.0,
           right: 10.0,
           bottom: 3.0
@@ -50,11 +51,9 @@ class HbcGoodsTopContainer extends StatelessWidget {
   }
 
   Text _buildImageText(BuildContext context) {
-    return HBCTheme.buildText(
-        text: this.imgTitle,
-        fontSize: 16.0,
-        color: Colors.white,
-        fontWeight: FontWeight.w700
+    return Text(
+      imgTitle,
+      style: HbcCommonTextStyle.withWhiteColor(context).body2,
     );
   }
 }

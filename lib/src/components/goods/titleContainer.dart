@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/src/util/HBCTheme.dart';
+import 'package:myapp/src/components/lib/text.dart';
 
 class HbcGoodsTitleContainer extends StatelessWidget {
   final String title;
@@ -22,24 +23,26 @@ class HbcGoodsTitleContainer extends StatelessWidget {
   /// title UI
   Widget _buildTitleContainer(BuildContext context) {
     return Container(
-        child: HBCTheme.buildText(
-            text: this.title,
-            fontSize: 22.0,
-            fontFamily: 'FZDYSJW'
+        child: Text(
+          title,
+          style: HbcCommonTextStyle(context, style: TextStyle(
+              fontSize: 22.0,
+              fontFamily: 'FZDYSJW'
+          )).title,
         )
     );
   }
 
   /// theme inner UI - text & split
-  Widget _generateTheme(Map item, [String split]) {
+  Widget _generateTheme(BuildContext context, Map item, [String split]) {
     if (item != null) {
       return Container(
-          child:
-          HBCTheme.buildText(
-              text: item['themeName'],
-              fontSize: 14.0,
+        child: Text(
+          item['themeName'],
+          style: HbcCommonTextStyle(context, style: TextStyle(
               color: Colors.grey.shade500
-          )
+          )).body1,
+        ),
       );
     } else {
       return Container(
@@ -62,10 +65,10 @@ class HbcGoodsTitleContainer extends StatelessWidget {
     for (int i = 0; i < this.theme.length; i++) {
       if (i == this.theme.length - 1) {
         //最后一个
-        keyWords.add(_generateTheme(this.theme[i]));
+        keyWords.add(_generateTheme(context,this.theme[i]));
       } else {
-        keyWords.add(_generateTheme(this.theme[i]));
-        keyWords.add(_generateTheme(null, '|'));
+        keyWords.add(_generateTheme(context,this.theme[i]));
+        keyWords.add(_generateTheme(context,null, '|'));
       }
     }
     return Container(
@@ -79,12 +82,12 @@ class HbcGoodsTitleContainer extends StatelessWidget {
 
   Widget _buildGuideTips(BuildContext context) {
     return Container(
-      alignment: Alignment(-1.0, -1.0),
-      child: HBCTheme.buildText(
-          text:'预定成功后，可挑选心意司导服务哦!',
-          fontSize: 14.0,
-          color: Colors.yellow.shade700
-      )
+        alignment: Alignment(-1.0, -1.0),
+        child: HBCTheme.buildText(
+            text: '预定成功后，可挑选心意司导服务哦!',
+            fontSize: 14.0,
+            color: Colors.yellow.shade700
+        )
     );
   }
 }

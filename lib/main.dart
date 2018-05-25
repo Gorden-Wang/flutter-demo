@@ -7,32 +7,32 @@ import 'src/util/HBCHttpResponse.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:myapp/src/screen/city/index.dart';
 
-void main() => runApp(new Center(child: new HbcGoodsDetail()));
+void main() => runApp(Center(child: HbcGoodsDetail()));
 
 class HbcGoodsDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(
+    return MaterialApp(
+      theme: ThemeData(
           primaryColor: Colors.white,
           fontFamily: 'PingFang SC Regular'
       ),
-      home: new Container(
+      home: Container(
         color: Colors.white,
-        child: new Container(
-            child: new Center(
-              child: new FutureBuilder<HBCHttpResponse>(
-                future: new HBCHttp(
+        child: Container(
+            child: Center(
+              child: FutureBuilder<HBCHttpResponse>(
+                future: HBCHttp(
                     url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=0&limit=10',
                     ak: 'aaa').get(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return new HBCGoodList(snapshot.data.resData);
+                    return HBCGoodList(snapshot.data.resData);
                   } else if (snapshot.hasError) {
-                    return new Text("${snapshot.error}");
+                    return Text("${snapshot.error}");
                   }
-                  return new CircularProgressIndicator();
+                  return CircularProgressIndicator();
                 },
               ),
             )
@@ -40,7 +40,7 @@ class HbcGoodsDetail extends StatelessWidget {
       ),
       routes:
       <String, WidgetBuilder>{
-//        '/':         (BuildContext context) => new StockHome(stocks, _configuration, configurationUpdater),
+//        '/':         (BuildContext context) => StockHome(stocks, _configuration, configurationUpdater),
         '/poi': (BuildContext context) => null
       },
       onGenerateRoute: _getRoute,
@@ -52,23 +52,23 @@ class HbcGoodsDetail extends StatelessWidget {
     final List<String> goodsPath = settings.name.split('/goods/');
 
     if (goodsPath.length == 2 && goodsPath[1] != null) {
-      return new MaterialPageRoute(
+      return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) {
-            return new Container(
+            return Container(
               color: Colors.white,
-              child: new Center(
-                child: new FutureBuilder<HBCHttpResponse>(
-                  future: new HBCHttp(
+              child: Center(
+                child: FutureBuilder<HBCHttpResponse>(
+                  future: HBCHttp(
                       url: 'https://api7.huangbaoche.com/goods/v1.5/p/home/goodsDetail?goodsNo=${goodsPath[1]}&channelId=1145431513&offset=0&limit=2&userId=114638169144&fromGuideHome=&guideId=&ignoreGoodsStatus=',
                       ak: 'aaa').get(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return _buildHome(snapshot.data.resData);
                     } else if (snapshot.hasError) {
-                      return new Text("${snapshot.error}");
+                      return Text("${snapshot.error}");
                     }
-                    return new CircularProgressIndicator();
+                    return CircularProgressIndicator();
                   },
                 ),
               ),
@@ -77,13 +77,13 @@ class HbcGoodsDetail extends StatelessWidget {
       );
     }
     if (path.length == 2 && path[1] != null) {
-      return new MaterialPageRoute(
+      return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) {
-            return new WebviewScaffold(
+            return WebviewScaffold(
               url: 'https://goods.huangbaoche.com/goods/poi/${path[1]}',
-              appBar: new AppBar(
-                title: new Text('阿斯蒂芬'),
+              appBar: AppBar(
+                title: Text('阿斯蒂芬'),
               ),
               withZoom: true,
               withLocalStorage: true,
@@ -92,7 +92,7 @@ class HbcGoodsDetail extends StatelessWidget {
       );
     }
 
-    return new MaterialPageRoute(
+    return MaterialPageRoute(
         settings: settings,
         builder: (BuildContext context) {
           return null;
@@ -101,13 +101,13 @@ class HbcGoodsDetail extends StatelessWidget {
   }
 
   Scaffold _buildHome(Map data) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
               data['goodsName']),
         ),
-        bottomNavigationBar: new HbcGoodFooter(),
-        body: new HbcGoodsIndex(
+        bottomNavigationBar: HbcGoodFooter(),
+        body: HbcGoodsIndex(
             data: data
         )
     );
@@ -115,15 +115,13 @@ class HbcGoodsDetail extends StatelessWidget {
 
   Future<Null> _launchURL(BuildContext context, String url,
       String title) async {
-//    const url = 'sms:18510249866';
-//    flutterWebviewPlugin.launch(url);
-    Navigator.push(context, new MaterialPageRoute<void>(
+    Navigator.push(context, MaterialPageRoute<void>(
         builder: (BuildContext context)
     {
-      return new WebviewScaffold(
+      return WebviewScaffold(
         url: url,
-        appBar: new AppBar(
-          title: new Text(title),
+        appBar: AppBar(
+          title: Text(title),
         ),
         withZoom: true,
         withLocalStorage: true,

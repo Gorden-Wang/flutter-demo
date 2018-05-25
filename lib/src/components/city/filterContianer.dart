@@ -181,9 +181,9 @@ class FilterState extends State<HbcCityFilterContainer> {
       ),
       child: Row(
         children: <Widget>[
-          _FilterItem(itemList[0], clickHandle),
-          _FilterItem(itemList[1], clickHandle),
-          _FilterItem(itemList[2], clickHandle),
+          FilterItem(itemList[0], clickHandle),
+          FilterItem(itemList[1], clickHandle),
+          FilterItem(itemList[2], clickHandle),
         ],
       ),
     );
@@ -205,14 +205,14 @@ class FilterState extends State<HbcCityFilterContainer> {
 }
 
 
-class _FilterItem extends StatefulWidget {
+class FilterItem extends StatefulWidget {
   final Map item;
   final String title;
   final bool isBorder;
   bool isOpen;
   final Function clickHandle;
 
-  _FilterItem(this.item, this.clickHandle)
+  FilterItem(this.item, this.clickHandle)
       :
         this.title = item['title'],
         this.isOpen = item['isOpen'],
@@ -226,7 +226,7 @@ class _FilterItem extends StatefulWidget {
 
 }
 
-class HbcCityFilterState extends State<_FilterItem> {
+class HbcCityFilterState extends State<FilterItem> {
   bool isOpen;
 
   HbcCityFilterState() {

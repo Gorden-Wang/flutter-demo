@@ -14,4 +14,5 @@ class HBCCommonUtil {
     return res;
 
   }
+
 }

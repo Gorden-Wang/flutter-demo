@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:myapp/src/screen/city/main.dart';
 import 'package:myapp/src/screen/goods/main.dart';
+import 'dart:convert';
+import 'package:myapp/src/util/HBCCommonUtil.dart';
 
 var rootHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -17,16 +19,19 @@ var rootHandler = new Handler(
     });
 var goodsDetailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new HbcGoodDetail(params['goodsNo'][0]);
+      final String goodsNo = params['goodsNo'][0];
+      return new HbcGoodDetail(goodsNo);
     });
-
 
 var poiHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      final String poiId = params['poiId'][0];
+      List<int> decoder = HBCCommonUtil.getListInt(json.decode(params['poiName'][0]));
+      final String poiName =  utf8.decode(decoder);
       return WebviewScaffold(
-        url: 'https://goods.huangbaoche.com/goods/poi/${params['poiId'][0]}',
+        url: 'https://goods.huangbaoche.com/goods/poi/$poiId',
         appBar: AppBar(
-          title: Text('阿斯蒂芬'),
+          title: Text(poiName),
         ),
         withZoom: true,
         withLocalStorage: true,

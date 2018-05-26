@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'dart:convert';
 import 'package:myapp/src/router/application.dart';
 import 'package:myapp/src/components/lib/image.dart';
 
@@ -163,10 +164,8 @@ class HbcGoodTripListPoiItem extends StatelessWidget{
       data.add(
         GestureDetector(
             onTap: () {
-//              _launchURL(context,
-//                  'https://goods.huangbaoche.com/goods/poi/${item['poiId']}',
-//                  item['poiName']);
-              final String route = '/poi?poiId=${item['poiId']}';
+              final String poiName = utf8.encode(item['poiName']).toString();
+              final String route = '/poi?poiId=${item['poiId']}&poiName=$poiName';
               final transitionType = TransitionType.fadeIn;
               Application.router.navigateTo(context, route,transition: transitionType).then((res){
 

@@ -11,6 +11,12 @@ class HbcGoodsDetail extends StatelessWidget {
     final router = new Router();
     Routes.configureRoutes(router);
     Application.router = router;
+//    List<dynamic> a = json.decode('[231, 142, 139, 233, 135, 138, 229, 186, 134]');
+//    List<int> b = HBCCommonUtil.getListInt(a);
+//    print(b);
+//    print(utf8.encode('王释庆'));
+//    print(utf8.decode(b));
+//    print(utf8.decode('[231, 142, 139, 233, 135, 138, 229, 186, 134]'.codeUnits));
   }
 
   @override

@@ -104,10 +104,10 @@ class FilterState extends State<HbcCityFilterContainer> {
   }
 
   Expanded get filterRows {
-    List list0 = <Widget>[BuildListItem({'isBordered' : true,'title':'超省心(固定线路)'}),
-    BuildListItem({'isBordered' : false,'title':'超省心(固定线路)'})];
-    List list1 = <Widget>[BuildListItem({'isBordered' : true,'title':'1日'}),
-    BuildListItem({'isBordered' : false,'title':'多日'})];
+    List list0 = <Widget>[buildListItem({'isBordered' : true,'title':'超省心(固定线路)'}),
+    buildListItem({'isBordered' : false,'title':'超省心(固定线路)'})];
+    List list1 = <Widget>[buildListItem({'isBordered' : true,'title':'1日'}),
+    buildListItem({'isBordered' : false,'title':'多日'})];
     List list;
     if(item['index'] == 0){
       list = list0;
@@ -136,7 +136,7 @@ class FilterState extends State<HbcCityFilterContainer> {
 
   Widget buildGrid(){
     List<Widget> res = widget.goodsThemes.map((item){
-      return BuildListItem({'isBordered':false,'title':item['themeName']});
+      return buildListItem({'isBordered':false,'title':item['themeName']});
     }).toList();
     return new GridView.count(
       primary: false,
@@ -148,7 +148,7 @@ class FilterState extends State<HbcCityFilterContainer> {
     );
   }
 
-  Container BuildListItem(Map map) {
+  Container buildListItem(Map map) {
     var boxDecoration = map['isBordered'] ? BoxDecoration(
         border: Border(
             bottom: BorderSide(
@@ -209,7 +209,7 @@ class FilterItem extends StatefulWidget {
   final Map item;
   final String title;
   final bool isBorder;
-  bool isOpen;
+  final bool isOpen;
   final Function clickHandle;
 
   FilterItem(this.item, this.clickHandle)
@@ -241,7 +241,7 @@ class HbcCityFilterState extends State<FilterItem> {
   }
 
   Widget _buildItem(BuildContext context, String string, bool isBorder) {
-    var border = null;
+    var border;
     if (isBorder == true) {
       border = Border(
           right: BorderSide(

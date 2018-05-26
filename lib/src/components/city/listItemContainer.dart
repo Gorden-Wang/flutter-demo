@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluro/fluro.dart';
+import 'package:myapp/src/router/application.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:myapp/src/components/lib/text.dart';
@@ -14,7 +16,13 @@ class HbcCityListItemContainer extends StatelessWidget {
     // TODO: implement build
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/goods/${item['goodsNo']}');
+        String route = "/goods?goodsNo=${item['goodsNo']}";
+        TransitionType transitionType = TransitionType.native;
+        Application.router.navigateTo(
+            context, route,
+            transition: transitionType).then((result) {
+          // when back callback ?
+        });
       },
       child: Container(
         color: Colors.white,
@@ -103,7 +111,7 @@ class HbcCityListItemContainer extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Text(
-              '${subTitle} 位当地中文司导',
+              '$subTitle 位当地中文司导',
               style: HbcCommonTextStyle
                   .withWhiteColor(context)
                   .caption,
@@ -179,7 +187,7 @@ class HbcCityListItemContainer extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 8.0),
           child: Text(
-            '起/人.${dayCount}日',
+            '起/人.$dayCount日',
             style: HbcCommonTextStyle(context).caption,
           ),
         )

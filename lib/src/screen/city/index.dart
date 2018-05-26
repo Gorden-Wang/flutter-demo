@@ -151,7 +151,7 @@ class ListState extends State<HBCGoodList> {
 
   Future<HBCHttpResponse> _fetchData() {
     return HBCHttp(
-        url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=${offset}&limit=${LIMIT}',
+        url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=$offset&limit=$LIMIT',
         ak: 'test').get();
   }
 }

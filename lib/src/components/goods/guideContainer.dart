@@ -37,7 +37,7 @@ class HbcGoodsGuideContainer extends StatelessWidget {
   FutureBuilder<HBCHttpResponse> get buildFutureBuilder {
     return FutureBuilder(
       future: HBCHttp(
-          url: 'https://api7.huangbaoche.com/goods/v1.1/c/goodsguideinfolist?goodsNo=${goodsNo}',
+          url: 'https://api7.huangbaoche.com/goods/v1.1/c/goodsguideinfolist?goodsNo=$goodsNo',
           ak: 'aaa').get(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {

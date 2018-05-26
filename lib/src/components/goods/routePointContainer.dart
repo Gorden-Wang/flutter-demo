@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HbcGoodsRoutePointContainer extends StatelessWidget {
-  /**
-   * routePointMap : [
-   * {
-   *   imgUrl : String,
-   *   title : String
-   *   subTitle : String
-   *  }
-   * ]
-   */
+
   final List routePointMap;
 
   HbcGoodsRoutePointContainer(this.routePointMap);

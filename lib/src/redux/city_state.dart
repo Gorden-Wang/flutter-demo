@@ -1,38 +1,95 @@
 import 'package:redux/redux.dart';
 
 enum CityAction {
-  updateLoading
+  updateLoading,
+  updateScroll,
+  updateCityVo,
+  updateIsFetch,
+  updateQueryOffset,
+  updateCityList,
+  updateFixBar,
+  updateFilterOff,
+}
+
+class CityActions {
+  final CityAction action;
+  final data;
+
+  CityActions(this.action,{
+    this.data
+  });
 }
 
 
 class CityState {
   bool isLoading;
   double scroll;
+  Map cityVo;
+  bool isFetch;
+  int query_offset;
+  List cityList;
+  bool isFixBar;
+  double filterOffset;
 
   CityState({
     this.isLoading = false,
-    this.scroll = 0.0
-  });
+    this.scroll = 0.0,
+    this.cityVo = null,
+    this.isFetch = false,
+    this.query_offset = 1,
+    this.isFixBar = false,
+    this.filterOffset = 0.0,
+  }){
+    cityList = [];
+  }
 
   @override
   String toString() {
     // TODO: implement toString
-    return 'isloading=$isLoading&scroll=$scroll';
+    return 'isloading=$isLoading&scroll=$scroll&cityVo=$cityVo&isFetch=$isFetch';
   }
 }
 
 
-CityState cityReducer(CityState state, action) {
-  switch (action) {
-    case CityAction.updateLoading :
+CityState cityMainReducer(CityState state,  action) {
+  final data = action.data;
+  switch (action.action) {
+    case  CityAction.updateLoading:
       state.isLoading = !state.isLoading;
+      break;
+    case CityAction.updateCityVo :
+      state.cityVo = data;
+      break;
+    case CityAction.updateScroll :
+      state.scroll = data;
+      break;
+    case CityAction.updateIsFetch :
+      state.isFetch = data;
+      break;
+    case CityAction.updateQueryOffset :
+      state.query_offset = data;
+      break;
+    case CityAction.updateCityList :
+      if(state.cityList.length == 0){
+        state.cityList = data;
+        break;
+      }
+      state.cityList.addAll(data);
+      break;
+    case CityAction.updateFixBar :
+      state.isFixBar = data;
+      break;
+    case CityAction.updateFilterOff :
+      state.filterOffset = data;
   }
+//  print('offset=${action.data}');
   return state;
 }
 
 
-final CityReducer = combineReducers(
-    [cityReducer]
+
+final CityReducers = combineReducers(
+    [cityMainReducer]
 );
 
-final CityStore = new Store(CityReducer, initialState: CityState());
+final CityStore = new Store(CityReducers, initialState: CityState());

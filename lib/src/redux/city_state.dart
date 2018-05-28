@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
 enum CityAction {
@@ -11,25 +12,26 @@ enum CityAction {
   updateFilterOff,
 }
 
+@immutable
 class CityActions {
   final CityAction action;
   final data;
 
-  CityActions(this.action,{
+  CityActions(this.action, {
     this.data
   });
 }
 
-
+@immutable
 class CityState {
-  bool isLoading;
-  double scroll;
-  Map cityVo;
-  bool isFetch;
-  int queryOffset;
-  List cityList;
-  bool isFixBar;
-  double filterOffset;
+  final bool isLoading;
+  final double scroll;
+  final Map cityVo;
+  final bool isFetch;
+  final int queryOffset;
+  final List cityList;
+  final bool isFixBar;
+  final double filterOffset;
 
   CityState({
     this.isLoading = false,
@@ -39,53 +41,111 @@ class CityState {
     this.queryOffset = 1,
     this.isFixBar = false,
     this.filterOffset = 0.0,
-  }){
-    cityList = [];
+    this.cityList = const []
+  });
+
+  CityState copyWith({
+    isLoading,
+    scroll,
+    cityVo,
+    isFetch,
+    queryOffset,
+    cityList,
+    isFixBar,
+    filterOffset
+  }) {
+    return CityState(
+        isLoading: isLoading ?? this.isLoading,
+        scroll: scroll ?? this.scroll,
+        cityVo: cityVo ?? this.cityVo,
+        isFetch: isFetch ?? this.isFetch,
+        queryOffset: queryOffset ?? this.queryOffset,
+        cityList: cityList ?? this.cityList,
+        isFixBar: isFixBar ?? this.isFixBar,
+        filterOffset: filterOffset ?? this.filterOffset
+    );
+  }
+
+  Map get map {
+    return Map.of({
+      'isLoading': this.isLoading,
+      'scroll': this.scroll,
+      'cityVo': this.cityVo,
+      'isFetch': this.isFetch,
+      'queryOffset': this.queryOffset,
+      'cityList': this.cityList,
+      'isFixBar': this.isFixBar,
+      'filterOffset': this.filterOffset
+    });
   }
 
   @override
   String toString() {
-    // TODO: implement toString
-    return 'isloading=$isLoading&scroll=$scroll&cityVo=$cityVo&isFetch=$isFetch';
+    // big list will remove 。。
+    String str = 'CityState{';
+    map.forEach((key, value) {
+      if(key != 'cityVo' && key != 'cityList')
+        str += '$key:$value,';
+    });
+    str += '}';
+    return str;
   }
 }
 
 
-CityState cityMainReducer(CityState state,  action) {
+CityState cityMainReducer(CityState state, action) {
   final data = action.data;
   switch (action.action) {
-    case  CityAction.updateLoading:
-      state.isLoading = !state.isLoading;
+    case CityAction.updateLoading:
+      state = state.copyWith(
+          isLoading: !state.isLoading
+      );
       break;
     case CityAction.updateCityVo :
-      state.cityVo = data;
+      state = state.copyWith(
+          cityVo: data
+      );
       break;
     case CityAction.updateScroll :
-      state.scroll = data;
+      state = state.copyWith(
+          scroll: data
+      );
       break;
     case CityAction.updateIsFetch :
-      state.isFetch = data;
+      state = state.copyWith(
+          isFetch: data
+      );
       break;
     case CityAction.updateQueryOffset :
-      state.queryOffset = data;
+      state = state.copyWith(
+          queryOffset: data
+      );
       break;
     case CityAction.updateCityList :
-      if(state.cityList.length == 0){
-        state.cityList = data;
+      if (state.cityList.length == 0) {
+        state = state.copyWith(
+            cityList: data
+        );
         break;
       }
-      state.cityList.addAll(data);
+      state = state.copyWith(
+          cityList: state.cityList + data
+      );
       break;
-    case CityAction.updateFixBar :
-      state.isFixBar = data;
+    case CityAction.updateFixBar:
+      state = state.copyWith(
+          isFixBar: data
+      );
       break;
-    case CityAction.updateFilterOff :
-      state.filterOffset = data;
+    case CityAction.updateFilterOff:
+      state = state.copyWith(
+          filterOffset: data
+      );
+      break;
   }
-//  print('offset=${action.data}');
+  print(state);
   return state;
 }
-
 
 
 final cityReducers = combineReducers(

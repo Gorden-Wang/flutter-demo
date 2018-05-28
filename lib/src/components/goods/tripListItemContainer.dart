@@ -158,7 +158,7 @@ class HbcGoodTripListPoiItem extends StatelessWidget{
     List<Widget> data = [];
     if (dayItem['pois'] == null || dayItem['pois'].length == 0) {
       return Container();
-    };
+    }
 
     dayItem['pois'].forEach((item) {
       data.add(

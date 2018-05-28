@@ -7,7 +7,6 @@ const String QUESTION_ICON = 'https://fr-static.huangbaoche.com/20180320/wen.8e3
 class HbcGoodTripContainer extends StatelessWidget {
   final flutterWebviewPlugin = FlutterWebviewPlugin();
   final List trip;
-  Widget cacheWidget;
 
   HbcGoodTripContainer({
     Key key,
@@ -17,8 +16,7 @@ class HbcGoodTripContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-//    if(cacheWidget == null){
-    cacheWidget = Container(
+    return Container(
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,8 +52,5 @@ class HbcGoodTripContainer extends StatelessWidget {
         ],
       ),
     );
-//    }
-
-    return cacheWidget;
   }
 }

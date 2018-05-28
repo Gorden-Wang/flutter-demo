@@ -18,7 +18,7 @@ class HbcGoodDetail extends StatelessWidget{
       child: Center(
         child: FutureBuilder<HBCHttpResponse>(
           future: HBCHttp(
-              url: 'https://api7.huangbaoche.com/goods/v1.5/p/home/goodsDetail?goodsNo=${goodsNo}&channelId=1145431513&offset=0&limit=2&userId=114638169144&fromGuideHome=&guideId=&ignoreGoodsStatus=',
+              url: 'https://api7.huangbaoche.com/goods/v1.5/p/home/goodsDetail?goodsNo=$goodsNo&channelId=1145431513&offset=0&limit=2&userId=114638169144&fromGuideHome=&guideId=&ignoreGoodsStatus=',
               ak: 'aaa').get(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

@@ -50,9 +50,9 @@ class HBCGoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: try to dispatch one action;
-    CityStore.dispatch(CityActions(
+    cityStore.dispatch(CityActions(
         CityAction.updateFilterOff, data: _getFilterOffset(context)));
-    CityStore.dispatch(
+    cityStore.dispatch(
         CityActions(CityAction.updateCityList, data: this.defaultListData));
     return getReduxProvider(context);
   }
@@ -132,10 +132,10 @@ class HBCGoodList extends StatelessWidget {
       double offset = controller.offset;
       double maxScrollExtent = controller.position.maxScrollExtent;
       if (offset > state.filterOffset && state.isFixBar == false) {
-        CityStore.dispatch(CityActions(CityAction.updateFixBar, data: true));
+        cityStore.dispatch(CityActions(CityAction.updateFixBar, data: true));
       }
       if (offset <= state.filterOffset && state.isFixBar == true) {
-        CityStore.dispatch(CityActions(CityAction.updateFixBar, data: false));
+        cityStore.dispatch(CityActions(CityAction.updateFixBar, data: false));
       }
       scroll(offset, maxScrollExtent, state);
     });
@@ -146,19 +146,19 @@ class HBCGoodList extends StatelessWidget {
     double diff = maxScrollExtent - position;
     bool _isFetch = state.isFetch;
     int pageCount = (goodsCount / LIMIT).ceil();
-    int offset = state.query_offset;
+    int offset = state.queryOffset;
     if (diff <= BOTTOMPOSITION && diff >= 0 && _isFetch == false &&
         offset <= pageCount) {
-      CityStore.dispatch(CityActions(CityAction.updateIsFetch, data: true));
+      cityStore.dispatch(CityActions(CityAction.updateIsFetch, data: true));
       _fetchData(offset).then((value) {
-        CityStore.dispatch(CityActions(
+        cityStore.dispatch(CityActions(
             CityAction.updateCityList, data: value.resData['goodses']));
-        CityStore.dispatch(CityActions(CityAction.updateIsFetch, data: false));
-        CityStore.dispatch(
+        cityStore.dispatch(CityActions(CityAction.updateIsFetch, data: false));
+        cityStore.dispatch(
             CityActions(CityAction.updateQueryOffset, data: ++offset));
       });
     }
-    CityStore.dispatch(CityActions(CityAction.updateScroll, data: position));
+    cityStore.dispatch(CityActions(CityAction.updateScroll, data: position));
   }
 
   Future<HBCHttpResponse> _fetchData(int offset) {

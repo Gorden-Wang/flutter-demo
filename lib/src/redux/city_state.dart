@@ -26,7 +26,7 @@ class CityState {
   double scroll;
   Map cityVo;
   bool isFetch;
-  int query_offset;
+  int queryOffset;
   List cityList;
   bool isFixBar;
   double filterOffset;
@@ -34,9 +34,9 @@ class CityState {
   CityState({
     this.isLoading = false,
     this.scroll = 0.0,
-    this.cityVo = null,
+    this.cityVo,
     this.isFetch = false,
-    this.query_offset = 1,
+    this.queryOffset = 1,
     this.isFixBar = false,
     this.filterOffset = 0.0,
   }){
@@ -67,7 +67,7 @@ CityState cityMainReducer(CityState state,  action) {
       state.isFetch = data;
       break;
     case CityAction.updateQueryOffset :
-      state.query_offset = data;
+      state.queryOffset = data;
       break;
     case CityAction.updateCityList :
       if(state.cityList.length == 0){
@@ -88,8 +88,8 @@ CityState cityMainReducer(CityState state,  action) {
 
 
 
-final CityReducers = combineReducers(
+final cityReducers = combineReducers(
     [cityMainReducer]
 );
 
-final CityStore = new Store(CityReducers, initialState: CityState());
+final cityStore = new Store(cityReducers, initialState: CityState());

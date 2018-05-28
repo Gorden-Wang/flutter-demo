@@ -10,7 +10,7 @@ class HbcCity extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return StoreProvider(
-      store: CityStore,
+      store: cityStore,
       child: Container(
         color: Colors.white,
         child: Container(

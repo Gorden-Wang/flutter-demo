@@ -50,10 +50,12 @@ class HBCGoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: try to dispatch one action;
+
+    print('build');
     cityStore.dispatch(CityActions(
         CityAction.updateFilterOff, data: _getFilterOffset(context)));
     cityStore.dispatch(
-        CityActions(CityAction.updateCityList, data: this.defaultListData));
+        CityActions(CityAction.updateDefaultList, data: this.list));
     return getReduxProvider(context);
   }
 
@@ -155,13 +157,15 @@ class HBCGoodList extends StatelessWidget {
             CityAction.updateCityList, data: value.resData['goodses']));
         cityStore.dispatch(CityActions(CityAction.updateIsFetch, data: false));
         cityStore.dispatch(
-            CityActions(CityAction.updateQueryOffset, data: ++offset));
+            CityActions(CityAction.updateQueryOffset, data: offset+1));
       });
     }
     cityStore.dispatch(CityActions(CityAction.updateScroll, data: position));
   }
 
   Future<HBCHttpResponse> _fetchData(int offset) {
+    offset = offset*LIMIT;
+    print('offset=$offset&limit=$LIMIT');
     return HBCHttp(
         url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=$offset&limit=$LIMIT',
         ak: 'test').get();

@@ -10,6 +10,7 @@ enum CityAction {
   updateCityList,
   updateFixBar,
   updateFilterOff,
+  updateDefaultList,
 }
 
 @immutable
@@ -41,7 +42,17 @@ class CityState {
     this.queryOffset = 1,
     this.isFixBar = false,
     this.filterOffset = 0.0,
-    this.cityList = const []
+    this.cityList = const [
+      {
+        'BUILDTYPE': 'topContainer',
+      },
+      {
+        'BUILDTYPE': 'tabContainer',
+      },
+      {
+        'BUILDTYPE': 'filterContainer',
+      },
+    ]
   });
 
   CityState copyWith({
@@ -84,7 +95,7 @@ class CityState {
     // big list will remove 。。
     String str = 'CityState{';
     map.forEach((key, value) {
-      if(key != 'cityVo' && key != 'cityList')
+      if (key == 'queryOffset')
         str += '$key:$value,';
     });
     str += '}';
@@ -122,15 +133,17 @@ CityState cityMainReducer(CityState state, action) {
       );
       break;
     case CityAction.updateCityList :
-      if (state.cityList.length == 0) {
-        state = state.copyWith(
-            cityList: data
-        );
-        break;
-      }
       state = state.copyWith(
           cityList: state.cityList + data
       );
+      break;
+    case CityAction.updateDefaultList :
+      if(state.cityList.length == 3){
+        state = state.copyWith(
+          cityList: state.cityList + data,
+        );
+        break;
+      }
       break;
     case CityAction.updateFixBar:
       state = state.copyWith(
@@ -143,7 +156,7 @@ CityState cityMainReducer(CityState state, action) {
       );
       break;
   }
-  print(state);
+//  print(state);
   return state;
 }
 

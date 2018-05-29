@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+
 import 'package:myapp/src/util/HBCHttp.dart';
 import 'package:myapp/src/util/HBCHttpResponse.dart';
+import 'package:myapp/src/util/HBCCommonUtil.dart';
 import 'package:myapp/src/components/city/topContianer.dart';
 import 'package:myapp/src/components/city/listItemContainer.dart';
 import 'package:myapp/src/components/city/tabContianer.dart';
@@ -18,8 +20,7 @@ class HBCGoodList extends StatelessWidget {
   final Map cityGuide, cityContent, cityService;
   final int goodsCount;
 
-  List get defaultListData => _getListViewData();
-
+//  ScrollController controller = ScrollController();
 
   HBCGoodList(this.data)
       :
@@ -30,28 +31,10 @@ class HBCGoodList extends StatelessWidget {
         this.cityService = data['cityService'],
         this.goodsCount = data['goodsCount'];
 
-  List _getListViewData() {
-    List list = [
-      Map.from({
-        'BUILDTYPE': 'topContainer',
-      }),
-      Map.from({
-        'BUILDTYPE': 'tabContainer',
-      }),
-      Map.from({
-        'BUILDTYPE': 'filterContainer',
-      }),
-    ];
-
-    list.addAll(this.list);
-    return list;
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: try to dispatch one action;
 
-    print('build');
     cityStore.dispatch(CityActions(
         CityAction.updateFilterOff, data: _getFilterOffset(context)));
     cityStore.dispatch(
@@ -67,9 +50,10 @@ class HBCGoodList extends StatelessWidget {
     );
   }
 
-  Widget getListBuilder(BuildContext context, CityState state) {
+  Widget getListBuilder(BuildContext context, CityState state,
+      ScrollController scroller) {
     return ListView.builder(
-      controller: _getController(context, state),
+      controller: scroller,
       itemCount: state.cityList.length,
       itemBuilder: (BuildContext context, int index) {
         switch (state.cityList[index]['BUILDTYPE']) {
@@ -81,7 +65,7 @@ class HBCGoodList extends StatelessWidget {
             return HbcCityTabContainer(
                 cityService, goodsCount);
           case 'filterContainer' :
-            return HbcCityFilterContainer(goodsThemes);
+            return HbcCityFilterContainer(goodsThemes, scroller: scroller);
           default :
             return HbcCityListItemContainer(
                 state.cityList[index], cityGuide);
@@ -91,15 +75,38 @@ class HBCGoodList extends StatelessWidget {
   }
 
   Widget getMainBuilder(BuildContext context, CityState state) {
+    final ScrollController scroller = _getController(context, state);
     bool isFixBar = state.isFixBar;
+    bool isExpendTab = state.isExpendTab;
     var topFilter = isFixBar == true ? Positioned(
       left: 0.0,
       width: MediaQuery
           .of(context)
           .size
           .width,
-      child: HbcCityFilterContainer(goodsThemes),
+      child: HbcCityFilterContainer(goodsThemes, scroller: scroller),
     ) : Container();
+    Widget overLay_inner = Container(
+      color: new Color(0x50000000),
+    );
+    Widget wrapGuest = HBCCommonUtil.wrapGesture(context, overLay_inner,
+        onTap: (){
+          cityStore.dispatch(CityActions(CityAction.resetSelTabItem));
+        });
+    Widget overLay_posiiton = isExpendTab == true ? Positioned(
+        left: 0.0,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        child: wrapGuest
+    ) : Container();
+
+
 
     return SafeArea(
       top: true,
@@ -108,9 +115,11 @@ class HBCGoodList extends StatelessWidget {
         children: <Widget>[
           Container(
             color: Color(0xfff5f5f5),
-            child: getListBuilder(context, state),
+            child: getListBuilder(context, state, scroller),
           ),
-          topFilter
+          overLay_posiiton,
+          topFilter,
+
         ],
       ),
     );
@@ -157,14 +166,14 @@ class HBCGoodList extends StatelessWidget {
             CityAction.updateCityList, data: value.resData['goodses']));
         cityStore.dispatch(CityActions(CityAction.updateIsFetch, data: false));
         cityStore.dispatch(
-            CityActions(CityAction.updateQueryOffset, data: offset+1));
+            CityActions(CityAction.updateQueryOffset, data: offset + 1));
       });
     }
     cityStore.dispatch(CityActions(CityAction.updateScroll, data: position));
   }
 
   Future<HBCHttpResponse> _fetchData(int offset) {
-    offset = offset*LIMIT;
+    offset = offset * LIMIT;
     print('offset=$offset&limit=$LIMIT');
     return HBCHttp(
         url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=$offset&limit=$LIMIT',

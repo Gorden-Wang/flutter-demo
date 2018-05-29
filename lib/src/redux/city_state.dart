@@ -11,6 +11,8 @@ enum CityAction {
   updateFixBar,
   updateFilterOff,
   updateDefaultList,
+  updateSelTabItem,
+  resetSelTabItem
 }
 
 @immutable
@@ -23,6 +25,11 @@ class CityActions {
   });
 }
 
+const TAB_ITEMS = const [
+  {'title': '类型', 'isBorder': true, 'index': 0, 'isOpen': false},
+  {'title': '天数', 'isBorder': true, 'index': 1, 'isOpen': false},
+  {'title': '主题', 'isBorder': false, 'index': 2, 'isOpen': false}
+];
 @immutable
 class CityState {
   final bool isLoading;
@@ -33,6 +40,9 @@ class CityState {
   final List cityList;
   final bool isFixBar;
   final double filterOffset;
+  final Map selTabItem;
+  final List tabItems;
+  final bool isExpendTab;
 
   CityState({
     this.isLoading = false,
@@ -52,7 +62,10 @@ class CityState {
       {
         'BUILDTYPE': 'filterContainer',
       },
-    ]
+    ],
+    this.selTabItem,
+    this.tabItems = TAB_ITEMS,
+    this.isExpendTab = false
   });
 
   CityState copyWith({
@@ -63,7 +76,10 @@ class CityState {
     queryOffset,
     cityList,
     isFixBar,
-    filterOffset
+    filterOffset,
+    selTabItem,
+    tabItems,
+    isExpendTab
   }) {
     return CityState(
         isLoading: isLoading ?? this.isLoading,
@@ -73,7 +89,10 @@ class CityState {
         queryOffset: queryOffset ?? this.queryOffset,
         cityList: cityList ?? this.cityList,
         isFixBar: isFixBar ?? this.isFixBar,
-        filterOffset: filterOffset ?? this.filterOffset
+        filterOffset: filterOffset ?? this.filterOffset,
+        selTabItem: selTabItem ?? this.selTabItem,
+        tabItems: tabItems ?? this.tabItems,
+        isExpendTab: isExpendTab ?? this.isExpendTab
     );
   }
 
@@ -86,7 +105,9 @@ class CityState {
       'queryOffset': this.queryOffset,
       'cityList': this.cityList,
       'isFixBar': this.isFixBar,
-      'filterOffset': this.filterOffset
+      'filterOffset': this.filterOffset,
+      'selTabItem': this.selTabItem,
+      'isExpendTab': this.isExpendTab
     });
   }
 
@@ -95,7 +116,7 @@ class CityState {
     // big list will remove 。。
     String str = 'CityState{';
     map.forEach((key, value) {
-      if (key == 'queryOffset')
+      if (key == 'isFetch')
         str += '$key:$value,';
     });
     str += '}';
@@ -138,7 +159,7 @@ CityState cityMainReducer(CityState state, action) {
       );
       break;
     case CityAction.updateDefaultList :
-      if(state.cityList.length == 3){
+      if (state.cityList.length == 3) {
         state = state.copyWith(
           cityList: state.cityList + data,
         );
@@ -153,6 +174,36 @@ CityState cityMainReducer(CityState state, action) {
     case CityAction.updateFilterOff:
       state = state.copyWith(
           filterOffset: data
+      );
+      break;
+    case CityAction.updateSelTabItem :
+      List tabItems = List.of(state.tabItems);
+      bool isExpendTab = false;
+      if (data != null) {
+        final int index = data['index'];
+        for(int i = 0 ; i<tabItems.length;i++){
+          Map tabItem = Map.of(tabItems[i]);
+          if(i == index){
+            tabItem['isOpen'] = !tabItem['isOpen'];
+          }else{
+            tabItem['isOpen'] = false;
+          }
+          tabItems[i] = tabItem;
+        }
+        isExpendTab = tabItems[index]['isOpen'];
+
+      }
+      state = state.copyWith(
+          selTabItem: data,
+          tabItems: tabItems,
+          isExpendTab : isExpendTab
+      );
+      break;
+    case CityAction.resetSelTabItem :
+      state = state.copyWith(
+          selTabItem: Map.of({}),
+          tabItems: TAB_ITEMS,
+          isExpendTab : false,
       );
       break;
   }

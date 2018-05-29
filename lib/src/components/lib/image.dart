@@ -12,7 +12,7 @@ class HbcCircleImage extends StatelessWidget {
   final Color bgColor;
 
 
-  HbcCircleImage(@required this.url, {
+  HbcCircleImage(this.url, {
     this.key,
     this.width = 30.0,
     this.height = 30.0,
@@ -48,7 +48,7 @@ class HbcCommonImage extends StatelessWidget {
   final AlignmentGeometry stackAlign;
   final List<Widget> children;
 
-  HbcCommonImage(@required this.url, {
+  HbcCommonImage(this.url, {
     this.key,
     this.width,
     this.height,

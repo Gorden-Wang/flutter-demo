@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+
 import 'package:myapp/src/util/HBCHttp.dart';
 import 'package:myapp/src/util/HBCHttpResponse.dart';
+import 'package:myapp/src/util/HBCCommonUtil.dart';
 import 'package:myapp/src/components/city/topContianer.dart';
 import 'package:myapp/src/components/city/listItemContainer.dart';
 import 'package:myapp/src/components/city/tabContianer.dart';
 import 'package:myapp/src/components/city/filterContianer.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:myapp/src/redux/city_state.dart';
 
 const double BOTTOMPOSITION = 300.0;
 const int LIMIT = 10;
 
-class HBCGoodList extends StatefulWidget {
+class HBCGoodList extends StatelessWidget {
   final Map data;
-  final List list,goodsThemes;
+  final List list, goodsThemes;
   final Map cityGuide, cityContent, cityService;
   final int goodsCount;
 
-  List get listViewData => _getListViewData();
+//  ScrollController controller = ScrollController();
 
   HBCGoodList(this.data)
       :
@@ -27,73 +31,82 @@ class HBCGoodList extends StatefulWidget {
         this.cityService = data['cityService'],
         this.goodsCount = data['goodsCount'];
 
-
-
-
-
-  List _getListViewData() {
-    List list = [
-      Map.from({
-        'BUILDTYPE': 'topContainer',
-      }),
-      Map.from({
-        'BUILDTYPE': 'tabContainer',
-      }),
-      Map.from({
-        'BUILDTYPE': 'filterContainer',
-      }),
-    ];
-
-    list.addAll(this.list);
-    return list;
-  }
-
-  @override
-  ListState createState() =>
-      ListState(listViewData, (goodsCount / LIMIT).ceil());
-
-}
-
-class ListState extends State<HBCGoodList> {
-  final int pageCount; // default fetch api count;
-  double _scroll = 0.0; //  default scroll offset
-  bool _isFetch; // chick is fetching api;
-  List listViewData; // default listView data;
-  int count; // default listView count;
-  int offset = 1; // default api offset;
-
-  ListState(this.listViewData, this.pageCount)
-      : this.count = listViewData.length,
-        this._isFetch = false;
-
-
-  void scroll(double position, double maxScrollExtent) {
-    double diff = maxScrollExtent - position;
-    if (diff <= BOTTOMPOSITION && diff >= 0 && _isFetch == false &&
-        offset <= pageCount) {
-      _isFetch = true;
-      _fetchData().then((value) {
-        listViewData.addAll(value.resData['goodses']);
-        count = listViewData.length;
-        _isFetch = false;
-        offset++;
-      });
-    }
-    setState(() {
-      _scroll = position;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    var topFilter = _scroll > _getFilterOffset(context) ? Positioned(
+    // TODO: try to dispatch one action;
+
+    cityStore.dispatch(CityActions(
+        CityAction.updateFilterOff, data: _getFilterOffset(context)));
+    cityStore.dispatch(
+        CityActions(CityAction.updateDefaultList, data: this.list));
+    return getReduxProvider(context);
+  }
+
+  Widget getReduxProvider(BuildContext context) {
+    return new StoreConnector<CityState, CityState>(
+        converter: (store) => store.state,
+        builder: (context, state) =>
+            getMainBuilder(context, state)
+    );
+  }
+
+  Widget getListBuilder(BuildContext context, CityState state,
+      ScrollController scroller) {
+    return ListView.builder(
+      controller: scroller,
+      itemCount: state.cityList.length,
+      itemBuilder: (BuildContext context, int index) {
+        switch (state.cityList[index]['BUILDTYPE']) {
+          case 'topContainer' :
+            return HbcCityTopContainer(
+                cityContent, cityGuide,
+                cityService);
+          case 'tabContainer' :
+            return HbcCityTabContainer(
+                cityService, goodsCount);
+          case 'filterContainer' :
+            return HbcCityFilterContainer(goodsThemes, scroller: scroller);
+          default :
+            return HbcCityListItemContainer(
+                state.cityList[index], cityGuide);
+        }
+      },
+    );
+  }
+
+  Widget getMainBuilder(BuildContext context, CityState state) {
+    final ScrollController scroller = _getController(context, state);
+    bool isFixBar = state.isFixBar;
+    bool isExpendTab = state.isExpendTab;
+    var topFilter = isFixBar == true ? Positioned(
       left: 0.0,
       width: MediaQuery
           .of(context)
           .size
           .width,
-      child: HbcCityFilterContainer(widget.goodsThemes),
+      child: HbcCityFilterContainer(goodsThemes, scroller: scroller),
     ) : Container();
+    Widget overLay_inner = Container(
+      color: new Color(0x50000000),
+    );
+    Widget wrapGuest = HBCCommonUtil.wrapGesture(context, overLay_inner,
+        onTap: (){
+          cityStore.dispatch(CityActions(CityAction.resetSelTabItem));
+        });
+    Widget overLay_posiiton = isExpendTab == true ? Positioned(
+        left: 0.0,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        child: wrapGuest
+    ) : Container();
+
+
 
     return SafeArea(
       top: true,
@@ -101,43 +114,17 @@ class ListState extends State<HBCGoodList> {
       child: Stack(
         children: <Widget>[
           Container(
-              color: Color(0xfff5f5f5),
-              child: ListView.builder(
-                controller: _getController(context),
-                itemCount: count,
-                itemBuilder: (BuildContext context, int index) {
-                  switch (listViewData[index]['BUILDTYPE']) {
-                    case 'topContainer' :
-                      return HbcCityTopContainer(
-                          widget.cityContent, widget.cityGuide,
-                          widget.cityService);
-                    case 'tabContainer' :
-                      return HbcCityTabContainer(
-                          widget.cityService, widget.goodsCount);
-                    case 'filterContainer' :
-                      return HbcCityFilterContainer(widget.goodsThemes);
-                    default :
-                      return HbcCityListItemContainer(
-                          listViewData[index], widget.cityGuide);
-                  }
-                },
-              )
+            color: Color(0xfff5f5f5),
+            child: getListBuilder(context, state, scroller),
           ),
-          topFilter
+          overLay_posiiton,
+          topFilter,
+
         ],
       ),
     );
   }
 
-  ScrollController _getController(BuildContext context) {
-    var controller = ScrollController();
-    controller.addListener(() {
-      double offset = controller.offset;
-      double maxScrollExtent = controller.position.maxScrollExtent;
-      scroll(offset, maxScrollExtent);
-    });
-    return controller;
-  }
 
   double _getFilterOffset(BuildContext context) {
     double topImageHeight = MediaQuery
@@ -149,9 +136,49 @@ class ListState extends State<HBCGoodList> {
     return topImageHeight + tabHeight + lineCountHeight;
   }
 
-  Future<HBCHttpResponse> _fetchData() {
+  /// compute scroll position to fix tab bar and load more data;
+  ScrollController _getController(BuildContext context, CityState state) {
+    var controller = ScrollController();
+    controller.addListener(() {
+      double offset = controller.offset;
+      double maxScrollExtent = controller.position.maxScrollExtent;
+      if (offset > state.filterOffset && state.isFixBar == false) {
+        cityStore.dispatch(CityActions(CityAction.updateFixBar, data: true));
+      }
+      if (offset <= state.filterOffset && state.isFixBar == true) {
+        cityStore.dispatch(CityActions(CityAction.updateFixBar, data: false));
+      }
+      scroll(offset, maxScrollExtent, state);
+    });
+    return controller;
+  }
+
+  void scroll(double position, double maxScrollExtent, CityState state) {
+    double diff = maxScrollExtent - position;
+    bool _isFetch = state.isFetch;
+    int pageCount = (goodsCount / LIMIT).ceil();
+    int offset = state.queryOffset;
+    if (diff <= BOTTOMPOSITION && diff >= 0 && _isFetch == false &&
+        offset <= pageCount) {
+      cityStore.dispatch(CityActions(CityAction.updateIsFetch, data: true));
+      _fetchData(offset).then((value) {
+        cityStore.dispatch(CityActions(
+            CityAction.updateCityList, data: value.resData['goodses']));
+        cityStore.dispatch(CityActions(CityAction.updateIsFetch, data: false));
+        cityStore.dispatch(
+            CityActions(CityAction.updateQueryOffset, data: offset + 1));
+      });
+    }
+    cityStore.dispatch(CityActions(CityAction.updateScroll, data: position));
+  }
+
+  Future<HBCHttpResponse> _fetchData(int offset) {
+    offset = offset * LIMIT;
+    print('offset=$offset&limit=$LIMIT');
     return HBCHttp(
         url: 'https://api7.huangbaoche.com/goods/v1.4/p/home/cityGoods?cityId=217&cityHeadPicSize=750&themeId=0&daysCountMin=0&daysCountMax=0&goodsClass=0&channelId=1108019942&offset=$offset&limit=$LIMIT',
         ak: 'test').get();
   }
+
 }
+

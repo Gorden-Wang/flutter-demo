@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:myapp/src/redux/city_state.dart';
 import 'package:myapp/src/components/lib/text.dart';
 
-class HbcCityFilterContainer extends StatefulWidget {
+class HbcCityFilterContainer extends StatelessWidget {
   final List goodsThemes;
+  final ScrollController scroller;
 
-  HbcCityFilterContainer(this.goodsThemes);
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return FilterState();
-  }
-
-}
-
-class FilterState extends State<HbcCityFilterContainer> {
-  bool isOpen = false;
-  Map item = {};
-  List itemList = [
-    {'title': '类型', 'isBorder': true, 'index': 0, 'isOpen': false},
-    {'title': '天数', 'isBorder': true, 'index': 1, 'isOpen': false},
-    {'title': '主题', 'isBorder': false, 'index': 2, 'isOpen': false}
-  ];
+  HbcCityFilterContainer(this.goodsThemes, {
+    this.scroller
+  });
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    List<Widget> filterWidgets = [buildFilterContainer];
+    return getReduxWrap();
+  }
+
+  Widget getReduxWrap() {
+    return new StoreConnector<CityState, CityState>(
+        converter: (store) => store.state,
+        builder: (context, state) =>
+            getMainBuild(context, state)
+    );
+  }
+
+  Widget getMainBuild(BuildContext context, CityState state) {
+    final isOpen = state.isExpendTab;
+    List<Widget> filterWidgets = [buildFilterContainer(context, state)];
     double maxHeight = 55.0;
     if (isOpen == true) {
-      filterWidgets.addAll([filterRows, filterButton]);
+      filterWidgets.addAll([filterRows(context, state), filterButton]);
       maxHeight = 198.0;
     }
     return SizedBox(
@@ -44,36 +44,41 @@ class FilterState extends State<HbcCityFilterContainer> {
   Container get filterButton {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: <BoxShadow>[BoxShadow(
-          color: Colors.grey.shade300,
-            blurRadius : 5.0
-
-        )]
+          boxShadow: <BoxShadow>[BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 5.0
+          )
+          ]
       ),
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                      top: BorderSide(
-                          color: Colors.grey.shade300,
-                          width: 1.0
-                      )
-                  )
-              ),
-              child: FlatButton(
-                onPressed: () {
-
-                },
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: Text(
-                    '重置'
+            child: GestureDetector(
+              onTap: () => null,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                        top: BorderSide(
+                            color: Colors.grey.shade300,
+                            width: 1.0
+                        )
+                    )
+                ),
+                child: FlatButton(
+                  onPressed: () {
+                    cityStore.dispatch(CityActions(CityAction.resetSelTabItem));
+                  },
+                  padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                  child: Text(
+                      '重置'
+                  ),
                 ),
               ),
             ),
           ),
+
+
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -103,21 +108,26 @@ class FilterState extends State<HbcCityFilterContainer> {
     );
   }
 
-  Expanded get filterRows {
-    List list0 = <Widget>[buildListItem({'isBordered' : true,'title':'超省心(固定线路)'}),
-    buildListItem({'isBordered' : false,'title':'超省心(固定线路)'})];
-    List list1 = <Widget>[buildListItem({'isBordered' : true,'title':'1日'}),
-    buildListItem({'isBordered' : false,'title':'多日'})];
+  Expanded filterRows(BuildContext context, CityState state) {
+    final Map item = state.selTabItem;
+    List list0 = <Widget>[
+      buildListItem(context, {'isBordered': true, 'title': '超省心(固定线路)'}),
+      buildListItem(context, {'isBordered': false, 'title': '超省心(固定线路)'})
+    ];
+    List list1 = <Widget>[
+      buildListItem(context, {'isBordered': true, 'title': '1日'}),
+      buildListItem(context, {'isBordered': false, 'title': '多日'})
+    ];
     List list;
-    if(item['index'] == 0){
+    if (item['index'] == 0) {
       list = list0;
-    }else if(item['index'] == 1){
+    } else if (item['index'] == 1) {
       list = list1;
-    }else{
+    } else {
       return Expanded(
         child: Container(
           color: Colors.white,
-          child: buildGrid(),
+          child: buildGrid(context),
         ),
       );
     }
@@ -134,41 +144,8 @@ class FilterState extends State<HbcCityFilterContainer> {
     );
   }
 
-  Widget buildGrid(){
-    List<Widget> res = widget.goodsThemes.map((item){
-      return buildListItem({'isBordered':false,'title':item['themeName']});
-    }).toList();
-    return new GridView.count(
-      primary: false,
-      padding: const EdgeInsets.only(bottom: 10.0),
-      crossAxisSpacing: 10.0,
-      crossAxisCount: 2,
-      childAspectRatio : 6.0,
-      children: res
-    );
-  }
-
-  Container buildListItem(Map map) {
-    var boxDecoration = map['isBordered'] ? BoxDecoration(
-        border: Border(
-            bottom: BorderSide(
-                color: Colors.grey.shade300,
-                width: 1.0
-            )
-        )
-    ) : null;
-    return Container(
-      padding: EdgeInsets.all(15.0),
-      alignment: Alignment.center,
-      decoration:boxDecoration,
-      child: Text(
-          map['title'],
-          style: HbcCommonTextStyle(context).body1
-      ),
-    );
-  }
-
-  Container get buildFilterContainer {
+  Container buildFilterContainer(BuildContext context, CityState state) {
+    final List itemList = state.tabItems;
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -181,67 +158,91 @@ class FilterState extends State<HbcCityFilterContainer> {
       ),
       child: Row(
         children: <Widget>[
-          FilterItem(itemList[0], clickHandle),
-          FilterItem(itemList[1], clickHandle),
-          FilterItem(itemList[2], clickHandle),
+          HbcCityFilterItem(itemList[0], handler: handler,
+              scrollPosition: state.filterOffset),
+          HbcCityFilterItem(itemList[1], handler: handler,
+              scrollPosition: state.filterOffset),
+          HbcCityFilterItem(itemList[2], handler: handler,
+              scrollPosition: state.filterOffset),
         ],
       ),
     );
   }
 
-  void clickHandle(Map item) {
-    setState(() {
-      int index = item['index'];
-      isOpen = item['isOpen'];
-      for (int i = 0; i < itemList.length; i++) {
-        if (index != i) {
-          itemList[i]['isOpen'] = false;
-        }
-      }
-      itemList[index] = item;
-      this.item = item;
-    });
+  void handler(double position) {
+    if (scroller.offset <= position) {
+      scroller.animateTo((position+1.0),
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut);
+    }
   }
+
+  Widget buildGrid(BuildContext context) {
+    List<Widget> res = goodsThemes.map((item) {
+      return buildListItem(
+          context, {'isBordered': false, 'title': item['themeName']});
+    }).toList();
+    return new GridView.count(
+        primary: false,
+        padding: const EdgeInsets.only(bottom: 10.0),
+        crossAxisSpacing: 10.0,
+        crossAxisCount: 2,
+        childAspectRatio: 6.0,
+        children: res
+    );
+  }
+
+  Container buildListItem(BuildContext context, Map map) {
+    var boxDecoration = map['isBordered'] ? BoxDecoration(
+        border: Border(
+            bottom: BorderSide(
+                color: Colors.grey.shade300,
+                width: 1.0
+            )
+        )
+    ) : null;
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      alignment: Alignment.center,
+      decoration: boxDecoration,
+      child: Text(
+          map['title'],
+          style: HbcCommonTextStyle(context).body1
+      ),
+    );
+  }
+
 }
 
 
-class FilterItem extends StatefulWidget {
-  final Map item;
+class HbcCityFilterItem extends StatelessWidget {
+  final bool isOpen;
   final String title;
   final bool isBorder;
-  final bool isOpen;
-  final Function clickHandle;
+  final int index;
+  final Function handler;
+  final double scrollPosition;
 
-  FilterItem(this.item, this.clickHandle)
+  final Map item;
+
+  HbcCityFilterItem(this.item, {
+    this.handler,
+    this.scrollPosition
+  })
       :
-        this.title = item['title'],
         this.isOpen = item['isOpen'],
-        this.isBorder = item['isBorder'];
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return HbcCityFilterState();
-  }
-
-}
-
-class HbcCityFilterState extends State<FilterItem> {
-  bool isOpen;
-
-  HbcCityFilterState() {
-//    isOpen = widget.isOpen;
-  }
+        this.title = item['title'],
+        this.isBorder = item['isBorder'],
+        this.index = item['index'];
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    isOpen = widget.isOpen;
-    return _buildItem(context, widget.title, widget.isBorder);
+    return _buildItem(context, title, isBorder);
   }
 
   Widget _buildItem(BuildContext context, String string, bool isBorder) {
-    var border;
+    Border border;
     if (isBorder == true) {
       border = Border(
           right: BorderSide(
@@ -284,11 +285,11 @@ class HbcCityFilterState extends State<FilterItem> {
   }
 
   _tapHandler() {
-    setState(() {
-      isOpen = !isOpen;
-      Map item = Map.from(widget.item);
-      item['isOpen'] = isOpen;
-      widget.clickHandle != null ? widget.clickHandle(item) : null;
-    });
+    cityStore.dispatch(CityActions(CityAction.updateSelTabItem, data: Map.from({
+      'index': index,
+    })));
+    if (handler != null && isOpen == false) {
+      handler(scrollPosition);
+    }
   }
 }
